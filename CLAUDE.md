@@ -17,6 +17,12 @@ fast-paced world."
 
 Short sentences over long ones.
 
+- Reply to me in Spanish. Mexican register — not neutral Latin American
+  Spanish, not Spain, not Argentinian. Keep the vocabulary plain and
+  everyday, the way I'd actually talk. Never a word I wouldn't recognize or
+  use myself, even if it's technically correct or sounds more
+  "professional."
+
 ## What this project is
 
 A personal multi-agent system.
