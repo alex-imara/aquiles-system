@@ -36,9 +36,12 @@ silently.
 
 ## Subagents currently active
 
-None yet. This list gets filled in as each one is built.
+- **meetings** — Plaud recordings, calls and transcripts. Recaps, decisions,
+  action items, and agenda prep for an upcoming meeting built from what's
+  still open. Owns meeting content only; not the calendar, not file
+  storage, not tasks.
 
-- _(placeholder)_
+More get added here as they're built.
 
 ## House rule: memory persistence
 
