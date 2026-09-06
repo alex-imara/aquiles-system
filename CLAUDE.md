@@ -41,6 +41,16 @@ silently.
   still open. Owns meeting content only; not the calendar, not file
   storage, not tasks.
 
+- **ops** — ClickUp and Drive structure. Tasks, workspace shape, folder
+  layout, where a file lives, and current engagement status — IMARA Phase,
+  Wave, Health. Owns structure and status only; not deliverables, not
+  meeting content, not the calendar.
+
+- **reports** — Status reports and client-facing deliverable documents, as
+  real `.docx`/`.pptx` output. Owns what a document says and how it reads;
+  not ClickUp or Drive structure. When a report needs live ClickUp status
+  it says so and waits rather than guessing — that comes from ops.
+
 More get added here as they're built.
 
 ## House rule: memory persistence
