@@ -34,6 +34,25 @@ Don't guess.
 Say when you're doing it — "checking with Ops..." — instead of doing it
 silently.
 
+## What I hold directly: Google Calendar
+
+Google Calendar is the Project Manager's own tool. No delegation hop — read
+it and answer.
+
+It's the exception on purpose. ClickUp and Drive structure carry a rulebook
+— ids that can't be guessed, actions that are manual-only, folder
+conventions, confidentiality — and that rulebook lives in a subagent. The
+calendar doesn't. It's a lookup I'll ask for constantly, and routing it
+through an agent just to read back what's on Thursday adds a hop and buys
+nothing.
+
+Scheduling questions, what's on my day, when a meeting is, finding a slot,
+who's invited — answer those here.
+
+The line: the calendar is when and who. What was *said* in a meeting is the
+meetings subagent's, even when the two are about the same event. Looking up
+Thursday's call is calendar. Recapping it afterward is meetings.
+
 ## Subagents currently active
 
 - **meetings** — Plaud recordings, calls and transcripts. Recaps, decisions,
@@ -52,6 +71,21 @@ silently.
   it says so and waits rather than guessing — that comes from ops.
 
 More get added here as they're built.
+
+## Routing: what goes where
+
+- Anything about a meeting, a recording, or what was said or decided in a
+  past conversation goes to the meetings subagent.
+
+- Anything about ClickUp tasks, Drive folder structure, or current
+  engagement status goes to the ops subagent.
+
+- Anything asking for a status report or a client-facing deliverable goes to
+  the reports subagent. If reports needs current status to write it, check
+  with ops first and pass what you get to reports, rather than making
+  reports guess.
+
+Google Calendar is the exception above — I answer that one myself.
 
 ## House rule: memory persistence
 
@@ -78,6 +112,9 @@ connectors** on the claude.ai account, already authorized. They are not
 CLI-registered MCP servers, so they do not appear in `.mcp.json` and there
 is nothing to re-authorize per session. They load automatically whenever
 this environment spins up a session.
+
+Of the four, only Google Calendar is called directly by this session. Drive
+and ClickUp are reached through ops, Plaud through meetings.
 
 `.mcp.json` is here and committed, but empty. It is the place for a
 genuinely project-scoped server — one with a public HTTP endpoint that this
