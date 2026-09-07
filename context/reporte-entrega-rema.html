@@ -1,0 +1,635 @@
+<title>REMA Research System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --paper-raised:#FAF8F5;
+    --ink:#0A1524;
+    --muted:#3E4754;
+    --line:#E4E3DF;
+    --accent:#FFB24A;
+    --accent-ink:#8A5300;
+    --accent-wash:#FFF3E0;
+    --status-done:#2F6B4F;
+    --status-pending:#A23B2E;
+    --font-display:'Fraunces', Cambria, Georgia, 'Times New Roman', serif;
+    --font-body: Arial, Helvetica, 'Segoe UI', sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0A1524;--paper-raised:#101E30;--ink:#ECEEF1;--muted:#A9B2BF;--line:#26364A;
+      --accent:#FFB24A;--accent-ink:#FFC876;--accent-wash:#2A2113;
+      --status-done:#57B98A;--status-pending:#E2725A;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0A1524;--paper-raised:#101E30;--ink:#ECEEF1;--muted:#A9B2BF;--line:#26364A;
+    --accent:#FFB24A;--accent-ink:#FFC876;--accent-wash:#2A2113;
+    --status-done:#57B98A;--status-pending:#E2725A;
+  }
+
+  *{box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--font-body);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:56rem;margin:0 auto;padding:0 1.5rem;}
+  h1,h2,h3{font-family:var(--font-display);font-weight:600;text-wrap:balance;color:var(--ink);}
+  h2{font-size:1.45rem;margin:0 0 1.1rem;}
+  h3{font-size:.95rem;margin:1.8rem 0 .6rem;text-transform:uppercase;letter-spacing:.06em;font-family:var(--font-body);font-weight:700;color:var(--muted);}
+  a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px;}
+  .kicker{text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;color:var(--accent-ink);font-weight:700;}
+  section.bookend .kicker{color:var(--accent);}
+
+  section.bookend{background:var(--ink);color:var(--paper);}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) section.bookend{background:#04070C;}}
+  :root[data-theme="dark"] section.bookend{background:#04070C;}
+  section.bookend .wrap{padding-top:4.5rem;padding-bottom:4.5rem;}
+  section.bookend h1{color:var(--paper);font-size:2.4rem;line-height:1.08;margin:.6rem 0 1rem;}
+  section.bookend p{color:#C9CCD3;max-width:38rem;margin:0 0 .8rem;}
+  section.bookend .meta{margin-top:2.2rem;font-size:.85rem;color:#8B909B;border-top:1px solid #2A2F3A;padding-top:1.2rem;}
+  .badge-draft{display:inline-block;border:1px solid var(--accent);color:var(--accent);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;padding:.3rem .6rem;border-radius:3px;font-weight:700;margin-top:1.4rem;}
+
+  nav.index{padding:2.4rem 0 1.2rem;border-bottom:1px solid var(--line);}
+  nav.index ol{list-style:none;margin:0;padding:0;columns:2;column-gap:2rem;}
+  nav.index li{margin-bottom:.5rem;break-inside:avoid;font-size:.9rem;}
+  nav.index a{color:var(--muted);}
+  nav.index .n{font-family:var(--font-display);color:var(--accent-ink);font-weight:600;margin-right:.4rem;}
+
+  section.s{padding:2.8rem 0;border-bottom:1px solid var(--line);}
+  section.s .num{font-family:var(--font-display);color:var(--accent-ink);font-size:1rem;font-weight:600;}
+
+  /* ---- key points: one line, one idea ---- */
+  .points{list-style:none;margin:0 0 1.2rem;padding:0;max-width:46rem;}
+  .points li{
+    display:grid;grid-template-columns:auto minmax(0,1fr);gap:.9rem;align-items:baseline;
+    padding:.62rem 0;border-top:1px solid var(--line);font-size:.95rem;
+  }
+  .points li:last-child{border-bottom:1px solid var(--line);}
+  .points .k{font-weight:700;white-space:nowrap;}
+  .points .k.n{font-family:var(--font-display);color:var(--accent-ink);font-size:1.05rem;}
+  .points .v{color:var(--muted);}
+  .points li.solo{grid-template-columns:1fr;}
+
+  .headline{
+    font-family:var(--font-display);font-size:1.15rem;font-weight:600;line-height:1.4;
+    margin:0 0 1.2rem;padding:1rem 1.2rem;background:var(--paper-raised);
+    border-left:3px solid var(--accent);max-width:46rem;
+  }
+
+  .pill{display:inline-flex;align-items:center;gap:.35rem;font-size:.7rem;font-weight:700;padding:.1rem .45rem;border-radius:4px;border:1px solid currentColor;white-space:nowrap;}
+  .pill.done{color:var(--status-done);}
+  .pill.pending{color:var(--status-pending);}
+  .pill.progress{color:var(--accent-ink);}
+
+  .tblwrap{overflow-x:auto;margin:1rem 0 1.4rem;border:1px solid var(--line);}
+  table{border-collapse:collapse;width:100%;font-size:.87rem;}
+  th,td{text-align:left;padding:.5rem .7rem;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{background:var(--paper-raised);font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
+  tr:last-child td{border-bottom:none;}
+  td.num, th.num{font-variant-numeric:tabular-nums;}
+  code{font-family:var(--font-mono);font-size:.85em;background:var(--paper-raised);padding:.05em .35em;border-radius:3px;}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:1.2rem 0 1.6rem;}
+  .stat{background:var(--paper);padding:.9rem 1rem;}
+  .stat .v{font-family:var(--font-display);font-size:1.5rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1;}
+  .stat .l{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:.35rem;}
+
+  figure{margin:1.4rem 0 2rem;}
+  figure svg{max-width:100%;height:auto;display:block;}
+  figcaption{font-size:.8rem;color:var(--muted);margin-top:.6rem;max-width:44rem;}
+  .figscroll{overflow-x:auto;}
+
+  .checklist{list-style:none;padding-left:0;margin:0 0 1rem;max-width:46rem;}
+  .checklist li{padding-left:1.7rem;position:relative;margin-bottom:.45rem;font-size:.93rem;}
+  .checklist li::before{position:absolute;left:0;top:.05em;font-family:var(--font-mono);font-size:.9em;}
+  .checklist li.done::before{content:'[x]';color:var(--status-done);}
+  .checklist li.pending::before{content:'[ ]';color:var(--status-pending);}
+
+  .flag{font-size:.88rem;color:var(--status-pending);border-left:2px solid var(--status-pending);padding-left:.9rem;margin:1.2rem 0;max-width:44rem;}
+  .note{font-size:.82rem;color:var(--muted);margin:.6rem 0 1.2rem;max-width:44rem;}
+  blockquote{font-style:italic;border-left:2px solid var(--line);padding-left:1rem;margin:1rem 0;max-width:44rem;color:var(--ink);}
+
+  @media (max-width:600px){
+    nav.index ol{columns:1;}
+    section.bookend h1{font-size:1.85rem;}
+    .points li{grid-template-columns:1fr;gap:.15rem;}
+  }
+</style>
+
+<section class="bookend">
+  <div class="wrap">
+    <span class="kicker">Imara AI · Sistema REMA · Galera</span>
+    <h1>Avance de entrega — Research System<br>Lead · Subagentes · Citas</h1>
+    <p>Estructura del estándar de entrega de Imara, aplicada al sistema de investigación que reemplaza el research manual dentro de REMA.</p>
+    <div class="badge-draft">Borrador de trabajo — build en curso, no enviado a Galera</div>
+    <div class="meta">
+      Alex, Imara · 7 de septiembre de 2026 · Confidencial, uso interno<br>
+      Insumos: junta del 4-sep, handoffs técnicos del 4 y 7-sep, corrida medida sobre 5 fondos,<br>
+      verificación de Drive y n8n del 7-sep
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+
+<nav class="index">
+  <ol>
+    <li><span class="n">01</span><a href="#s1">Dónde está la entrega</a></li>
+    <li><span class="n">02</span><a href="#s2">El escalón real</a></li>
+    <li><span class="n">03</span><a href="#s3">Qué falta para abrir G1</a></li>
+    <li><span class="n">04</span><a href="#s4">Agent Delivery Pack</a></li>
+    <li><span class="n">05</span><a href="#s5">Cómo funciona por dentro</a></li>
+    <li><span class="n">06</span><a href="#s6">Definition of Done</a></li>
+    <li><span class="n">07</span><a href="#s7">Lo que se midió</a></li>
+    <li><span class="n">08</span><a href="#s8">Controles</a></li>
+    <li><span class="n">09</span><a href="#s9">Operación y responsables</a></li>
+    <li><span class="n">10</span><a href="#s10">Compromiso y evidencia</a></li>
+    <li><span class="n">11</span><a href="#s11">Sprint de cierre</a></li>
+    <li><span class="n">12</span><a href="#s12">Demo y acta</a></li>
+    <li><span class="n">13</span><a href="#s13">Panel de cierre</a></li>
+    <li><span class="n">14</span><a href="#s14">Mensaje a Galera</a></li>
+    <li><span class="n">15</span><a href="#s15">Limitaciones</a></li>
+    <li><span class="n">16</span><a href="#s16">Fuentes</a></li>
+  </ol>
+</nav>
+
+<section class="s" id="s1">
+  <span class="num">01</span>
+  <h2>Dónde está la entrega</h2>
+  <div class="headline">Entregado = instalado + accesible + probado + aceptado + observable + con dueño. Se cumplen tres de seis.</div>
+  <ul class="points">
+    <li><span class="k">Instalado <span class="pill done">sí</span></span><span class="v">Corre de punta a punta y produce el CRM que leen los socios.</span></li>
+    <li><span class="k">Accesible <span class="pill progress">parcial</span></span><span class="v">La salida es un Excel. Lanzar una corrida requiere terminal.</span></li>
+    <li><span class="k">Probado <span class="pill progress">parcial</span></span><span class="v">5 fondos, 40 de 40 llamadas sin error. Los filtros no se han medido.</span></li>
+    <li><span class="k">Aceptado <span class="pill pending">no</span></span><span class="v">Ninguna corrida revisada por Damián o Tino.</span></li>
+    <li><span class="k">Observable <span class="pill done">sí</span></span><span class="v">Cada llamada queda registrada con costo, tiempo y respuesta cruda.</span></li>
+    <li><span class="k">Con dueño <span class="pill done">sí</span></span><span class="v">Damián, confirmado el 7-sep.</span></li>
+  </ul>
+  <div class="flag">La versión en n8n ya corrió. Seis intentos el 7-sep, tres completos. El último se detuvo por saldo agotado en la credencial de API, no por un fallo del diseño.</div>
+  <p class="note">El sistema pasó de prueba de un fondo a ciclo completo: corre por tandas, no repite fondos, termina en un CRM que los socios usan y corrigen. Es lo que Damián nombró como el valor real en la junta del 4 de septiembre.</p>
+</section>
+
+<section class="s" id="s2">
+  <span class="num">02</span>
+  <h2>El escalón real</h2>
+  <figure>
+    <div class="figscroll">
+    <svg viewBox="0 0 900 210" role="img" aria-label="Escalera de entrega de seis escalones: construido cumplido, desplegado y validado a medias, transferido, adoptado y valor probado sin cumplir. Debajo, los cinco gates: G0 hablado sin documentar, G1 cerrado, G2 a G4 sin iniciar.">
+      <defs>
+        <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+        <pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" stroke-width="2.4" opacity=".35"/></pattern>
+      </defs>
+      <g font-family="Arial, sans-serif" font-size="11" fill="currentColor">
+        <text x="0" y="14" font-size="10" opacity=".65">LA ESCALERA DE UNA ENTREGA REAL</text>
+        <rect x="0" y="30" width="140" height="34" fill="currentColor" opacity=".16" stroke="currentColor" stroke-width="1.2"/>
+        <text x="70" y="51" text-anchor="middle">Construido</text>
+        <rect x="146" y="30" width="140" height="34" fill="url(#hatch)" stroke="currentColor" stroke-width="1.2"/>
+        <text x="216" y="51" text-anchor="middle">Desplegado</text>
+        <rect x="292" y="30" width="140" height="34" fill="url(#hatch)" stroke="currentColor" stroke-width="1.2"/>
+        <text x="362" y="51" text-anchor="middle">Validado</text>
+        <rect x="438" y="30" width="140" height="34" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".45"/>
+        <text x="508" y="51" text-anchor="middle" opacity=".55">Transferido</text>
+        <rect x="584" y="30" width="140" height="34" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".45"/>
+        <text x="654" y="51" text-anchor="middle" opacity=".55">Adoptado</text>
+        <rect x="730" y="30" width="160" height="34" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".45"/>
+        <text x="810" y="51" text-anchor="middle" opacity=".55">Valor probado</text>
+        <line x1="290" y1="76" x2="290" y2="92" stroke="var(--accent-ink)" stroke-width="1.4" marker-start="url(#a1)"/>
+        <text x="298" y="90" font-size="10" fill="var(--accent-ink)">aquí está hoy · corre en infraestructura de Imara</text>
+
+        <text x="0" y="132" font-size="10" opacity=".65">LOS CINCO GATES</text>
+        <line x1="0" y1="160" x2="890" y2="160" stroke="currentColor" stroke-width="1" opacity=".35"/>
+        <circle cx="60" cy="160" r="9" fill="url(#hatch)" stroke="currentColor" stroke-width="1.3"/>
+        <text x="60" y="185" text-anchor="middle" font-size="10">G0 · hablado</text>
+        <text x="60" y="198" text-anchor="middle" font-size="9" opacity=".6">falta por escrito</text>
+        <circle cx="255" cy="160" r="9" fill="none" stroke="var(--accent-ink)" stroke-width="2.2"/>
+        <text x="255" y="185" text-anchor="middle" font-size="10" fill="var(--accent-ink)">G1 · cerrado</text>
+        <text x="255" y="198" text-anchor="middle" font-size="9" opacity=".6">bloquea a los demás</text>
+        <circle cx="450" cy="160" r="9" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".45"/>
+        <text x="450" y="185" text-anchor="middle" font-size="10" opacity=".55">G2 · UAT</text>
+        <circle cx="645" cy="160" r="9" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".45"/>
+        <text x="645" y="185" text-anchor="middle" font-size="10" opacity=".55">G3 · aceptación</text>
+        <circle cx="840" cy="160" r="9" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".45"/>
+        <text x="840" y="185" text-anchor="middle" font-size="10" opacity=".55">G4 · hypercare</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption><strong>Figura 1.</strong> G1 exige que el sistema corra donde el cliente lo va a usar, con reglas y datos reales.</figcaption>
+  </figure>
+</section>
+
+<section class="s" id="s3">
+  <span class="num">03</span>
+  <h2>Qué falta para abrir G1</h2>
+  <ul class="points">
+    <li><span class="k n">01</span><span class="v">Medir los dos veredictos sobre 15 a 20 fondos.</span></li>
+    <li><span class="k n">02</span><span class="v">Decidir dónde corre producción.</span></li>
+    <li><span class="k n">03</span><span class="v">Una corrida operada por Damián.</span></li>
+  </ul>
+</section>
+
+<section class="s" id="s4">
+  <span class="num">04</span>
+  <h2>Agent Delivery Pack</h2>
+  <ul class="points">
+    <li><span class="k">Este documento</span><span class="v">READ_ME, Agent Cards, controles, RACI, plan de cierre.</span></li>
+    <li><span class="k">En Drive</span><span class="v">Arquitectura del pipeline y los dos handoffs técnicos.</span></li>
+    <li><span class="k">En la Mac mini</span><span class="v">Instrucciones de los agentes, listas de sectores, registros de la corrida.</span></li>
+    <li><span class="k">Vacías</span><span class="v">UAT, demo y acta. Dependen de G1.</span></li>
+  </ul>
+</section>
+
+<section class="s" id="s5">
+  <span class="num">05</span>
+  <h2>Cómo funciona por dentro</h2>
+
+  <figure>
+    <div class="figscroll">
+    <svg viewBox="0 0 920 500" role="img" aria-label="Anatomía del sistema: un fondo entra al Lead orquestador, que planea los ángulos, despacha un subagente de calificación y hasta cinco subagentes de ángulo con búsqueda web, sintetiza el reporte, emite dos veredictos y pasa por el agente de citas; el resultado va al archivo de la tanda, de ahí al CRM en Excel, y la marca de re-investigar del socio regresa al inicio.">
+      <defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g font-family="Arial, sans-serif" font-size="11" fill="currentColor">
+        <rect x="6" y="26" width="908" height="446" rx="4" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="5 4" opacity=".45"/>
+        <text x="20" y="18" font-size="10" opacity=".7">UN FONDO A LA VEZ · UNOS 13 MINUTOS CADA UNO</text>
+
+        <rect x="22" y="176" width="118" height="52" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="81" y="199" text-anchor="middle">Un fondo</text>
+        <text x="81" y="214" text-anchor="middle" font-size="9" opacity=".7">de la BD Maestra</text>
+        <line x1="140" y1="202" x2="176" y2="202" stroke="currentColor" stroke-width="1.2" marker-end="url(#a2)"/>
+
+        <rect x="178" y="86" width="206" height="234" rx="3" fill="var(--accent-wash)" stroke="currentColor" stroke-width="2"/>
+        <text x="281" y="112" text-anchor="middle" font-size="13" font-weight="bold">Lead · orquestador</text>
+        <text x="281" y="128" text-anchor="middle" font-size="9" opacity=".7">reparte y decide</text>
+        <rect x="196" y="142" width="170" height="34" rx="2" fill="var(--paper)" stroke="currentColor" stroke-width="1"/>
+        <text x="281" y="164" text-anchor="middle" font-size="10">Planea 2 a 6 ángulos</text>
+        <rect x="196" y="184" width="170" height="34" rx="2" fill="var(--paper)" stroke="currentColor" stroke-width="1"/>
+        <text x="281" y="206" text-anchor="middle" font-size="10">Sintetiza el reporte</text>
+        <rect x="196" y="226" width="170" height="34" rx="2" fill="var(--paper)" stroke="currentColor" stroke-width="1"/>
+        <text x="281" y="248" text-anchor="middle" font-size="10">Emite los dos veredictos</text>
+        <rect x="196" y="268" width="170" height="34" rx="2" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3" opacity=".5"/>
+        <text x="281" y="284" text-anchor="middle" font-size="10" opacity=".6">Memoria entre corridas</text>
+        <text x="281" y="296" text-anchor="middle" font-size="9" opacity=".6">creada, sin uso</text>
+
+        <rect x="452" y="76" width="266" height="72" rx="3" fill="var(--paper-raised)" stroke="currentColor" stroke-width="1.6"/>
+        <text x="585" y="99" text-anchor="middle" font-weight="bold" font-size="12">Subagente de calificación</text>
+        <text x="585" y="116" text-anchor="middle" font-size="9" opacity=".75">verifica los tres criterios duros</text>
+        <text x="585" y="132" text-anchor="middle" font-size="9" opacity=".75">y mapea sectores en la misma pasada</text>
+
+        <rect x="452" y="164" width="266" height="62" rx="3" fill="var(--paper-raised)" stroke="currentColor" stroke-width="1.6"/>
+        <text x="585" y="187" text-anchor="middle" font-weight="bold" font-size="12">Subagentes de ángulo · 1 a 5</text>
+        <text x="585" y="207" text-anchor="middle" font-size="9" opacity=".75">uno por cada punto del perfil que falte</text>
+
+        <rect x="452" y="242" width="266" height="62" rx="3" fill="var(--paper-raised)" stroke="currentColor" stroke-width="1.6"/>
+        <text x="585" y="265" text-anchor="middle" font-weight="bold" font-size="12">Agente de citas</text>
+        <text x="585" y="285" text-anchor="middle" font-size="9" opacity=".75">pega la fuente detrás de cada afirmación</text>
+
+        <line x1="384" y1="150" x2="448" y2="112" stroke="currentColor" stroke-width="1.1" marker-end="url(#a2)"/>
+        <line x1="448" y1="126" x2="384" y2="168" stroke="currentColor" stroke-width="1.1" marker-end="url(#a2)" opacity=".55"/>
+        <line x1="384" y1="176" x2="448" y2="188" stroke="currentColor" stroke-width="1.1" marker-end="url(#a2)"/>
+        <line x1="448" y1="204" x2="384" y2="196" stroke="currentColor" stroke-width="1.1" marker-end="url(#a2)" opacity=".55"/>
+        <line x1="384" y1="240" x2="448" y2="266" stroke="currentColor" stroke-width="1.1" marker-end="url(#a2)"/>
+        <text x="404" y="140" font-size="9" opacity=".65">despacha</text>
+        <text x="392" y="222" font-size="9" opacity=".65">regresa hallazgo</text>
+
+        <rect x="756" y="120" width="140" height="66" rx="2" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="826" y="144" text-anchor="middle" font-size="10">Búsqueda web</text>
+        <text x="826" y="159" text-anchor="middle" font-size="9" opacity=".7">5 a 15 búsquedas</text>
+        <text x="826" y="173" text-anchor="middle" font-size="9" opacity=".7">por ángulo</text>
+        <line x1="718" y1="112" x2="754" y2="140" stroke="currentColor" stroke-width="1" opacity=".6"/>
+        <line x1="718" y1="195" x2="754" y2="166" stroke="currentColor" stroke-width="1" opacity=".6"/>
+
+        <line x1="281" y1="320" x2="281" y2="356" stroke="currentColor" stroke-width="1.2" marker-end="url(#a2)"/>
+        <rect x="178" y="358" width="176" height="52" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="266" y="381" text-anchor="middle">Archivo de la tanda</text>
+        <text x="266" y="396" text-anchor="middle" font-size="9" opacity=".7">una fila por fondo</text>
+        <line x1="354" y1="384" x2="392" y2="384" stroke="currentColor" stroke-width="1.2" marker-end="url(#a2)"/>
+        <rect x="394" y="358" width="176" height="52" rx="2" fill="var(--accent-wash)" stroke="currentColor" stroke-width="1.6"/>
+        <text x="482" y="381" text-anchor="middle">CRM en Excel</text>
+        <text x="482" y="396" text-anchor="middle" font-size="9" opacity=".7">lo que leen los socios</text>
+        <line x1="570" y1="384" x2="608" y2="384" stroke="currentColor" stroke-width="1.2" marker-end="url(#a2)"/>
+        <rect x="610" y="358" width="200" height="52" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="710" y="381" text-anchor="middle">El socio decide</text>
+        <text x="710" y="396" text-anchor="middle" font-size="9" opacity=".7">investigado o re-investigar</text>
+
+        <line x1="710" y1="410" x2="710" y2="444" stroke="var(--accent-ink)" stroke-width="1.3"/>
+        <line x1="710" y1="444" x2="81" y2="444" stroke="var(--accent-ink)" stroke-width="1.3"/>
+        <line x1="81" y1="444" x2="81" y2="232" stroke="var(--accent-ink)" stroke-width="1.3" marker-end="url(#a2)"/>
+        <text x="400" y="438" text-anchor="middle" font-size="10" fill="var(--accent-ink)">re-investigar vuelve a entrar en la siguiente tanda</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption><strong>Figura 2.</strong> Los subagentes trabajan de uno en uno. La flecha de abajo es el único punto donde una decisión humana vuelve a entrar.</figcaption>
+  </figure>
+
+  <h3>Los dos veredictos</h3>
+  <figure>
+    <div class="figscroll">
+    <svg viewBox="0 0 860 340" role="img" aria-label="La página de portafolio del fondo alimenta un solo subagente, que produce por un lado el veredicto de calificación con tres criterios duros y por otro el mapa de sectores; el primero decide si el fondo entra, el segundo sirve para descartar y priorizar.">
+      <defs><marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g font-family="Arial, sans-serif" font-size="11" fill="currentColor">
+        <rect x="300" y="14" width="260" height="46" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="430" y="34" text-anchor="middle">La página de portafolio del fondo</text>
+        <text x="430" y="50" text-anchor="middle" font-size="9" opacity=".7">fuente primaria · define el universo</text>
+        <line x1="430" y1="60" x2="430" y2="82" stroke="currentColor" stroke-width="1.2" marker-end="url(#a3)"/>
+        <rect x="300" y="84" width="260" height="52" rx="3" fill="var(--accent-wash)" stroke="currentColor" stroke-width="1.8"/>
+        <text x="430" y="106" text-anchor="middle" font-weight="bold">Un solo subagente</text>
+        <text x="430" y="123" text-anchor="middle" font-size="9" opacity=".75">clasifica lo que ya está leyendo · +$0.10 a $0.25</text>
+        <line x1="360" y1="136" x2="230" y2="170" stroke="currentColor" stroke-width="1.2" marker-end="url(#a3)"/>
+        <line x1="500" y1="136" x2="630" y2="170" stroke="currentColor" stroke-width="1.2" marker-end="url(#a3)"/>
+
+        <rect x="40" y="174" width="340" height="140" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <text x="210" y="198" text-anchor="middle" font-weight="bold" font-size="12">Veredicto 1 · ¿califica?</text>
+        <text x="210" y="220" text-anchor="middle" font-size="10">Sede en Estados Unidos</text>
+        <text x="210" y="238" text-anchor="middle" font-size="10">Portafolio en alimentos y bebidas</text>
+        <text x="210" y="256" text-anchor="middle" font-size="10">Esas empresas siguen vigentes</text>
+        <line x1="70" y1="268" x2="350" y2="268" stroke="currentColor" stroke-width="1" opacity=".4"/>
+        <text x="210" y="288" text-anchor="middle" font-size="10" fill="var(--accent-ink)">Los tres o no califica</text>
+        <text x="210" y="304" text-anchor="middle" font-size="9" opacity=".7">decide si el fondo entra</text>
+
+        <rect x="480" y="174" width="340" height="140" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <text x="650" y="198" text-anchor="middle" font-weight="bold" font-size="12">Veredicto 2 · mapa de sectores</text>
+        <text x="650" y="220" text-anchor="middle" font-size="10">En qué industrias juega hoy, con nombres</text>
+        <text x="650" y="238" text-anchor="middle" font-size="10">Cuántas empresas de cuántas en total</text>
+        <text x="650" y="256" text-anchor="middle" font-size="10">Peso: dominante, significativo, marginal</text>
+        <line x1="510" y1="268" x2="790" y2="268" stroke="currentColor" stroke-width="1" opacity=".4"/>
+        <text x="650" y="288" text-anchor="middle" font-size="10" fill="var(--accent-ink)">Sirve para descartar</text>
+        <text x="650" y="304" text-anchor="middle" font-size="9" opacity=".7">para priorizar se usa el sector dominante</text>
+
+        <text x="430" y="248" text-anchor="middle" font-size="10" opacity=".6">ninguno</text>
+        <text x="430" y="262" text-anchor="middle" font-size="10" opacity=".6">modifica</text>
+        <text x="430" y="276" text-anchor="middle" font-size="10" opacity=".6">al otro</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption><strong>Figura 3.</strong> Las 13 industrias que Galera atiende cubren casi toda la economía, así que el segundo veredicto sale positivo para la mayoría. Su valor está en el caso contrario.</figcaption>
+  </figure>
+
+  <h3>Por qué el conteo de sectores es confiable</h3>
+  <ul class="points">
+    <li><span class="k">Nombres</span><span class="v">Cada sector trae las empresas que lo sustentan, verificables en la página del fondo.</span></li>
+    <li><span class="k">Denominador</span><span class="v">Siempre trae el total del portafolio. Tres de cuatro no es tres de sesenta.</span></li>
+    <li><span class="k">Muestra parcial</span><span class="v">Arriba de 40 empresas clasifica lo que alcanza y lo declara.</span></li>
+    <li><span class="k">Solo vigentes</span><span class="v">Las empresas vendidas no suman peso sectorial.</span></li>
+  </ul>
+</section>
+
+<section class="s" id="s6">
+  <span class="num">06</span>
+  <h2>Definition of Done · 7 de 15</h2>
+  <p class="note">Una casilla marcada exige un archivo, un registro o una firma.</p>
+  <ul class="checklist">
+    <li class="done">Sistema corriendo de punta a punta — 40 de 40 llamadas sin error.</li>
+    <li class="done">Registro auditable de cada llamada al modelo.</li>
+    <li class="done">Reglas de evidencia verificadas a mano sobre casos reales.</li>
+    <li class="done">Corrida por tandas, sin repetir lo ya investigado.</li>
+    <li class="done">Duplicados colapsados — 609 filas contra 531 fondos reales.</li>
+    <li class="done">Salida que un socio abre sin ayuda técnica.</li>
+    <li class="done">Mapa de sectores validado en código, con alertas en su propia columna.</li>
+    <li class="pending">Los dos veredictos medidos sobre 15 a 20 fondos.</li>
+    <li class="pending">Validación del resto del formato de salida.</li>
+    <li class="pending">Detección automática de la pérdida de contenido del agente de citas.</li>
+    <li class="pending">Decisión de dónde corre producción.</li>
+    <li class="pending">Una corrida operada por Damián.</li>
+    <li class="pending">Costo y tiempo dimensionados con los filtros puestos.</li>
+    <li class="pending">RACI firmado.</li>
+    <li class="pending">Acceso a la infraestructura de Galera.</li>
+  </ul>
+</section>
+
+<section class="s" id="s7">
+  <span class="num">07</span>
+  <h2>Lo que se midió</h2>
+  <div class="stats">
+    <div class="stat"><div class="v">$2.90</div><div class="l">por fondo</div></div>
+    <div class="stat"><div class="v">12.8 min</div><div class="l">por fondo</div></div>
+    <div class="stat"><div class="v">40 / 40</div><div class="l">llamadas sin error</div></div>
+    <div class="stat"><div class="v">0</div><div class="l">veredictos medidos</div></div>
+  </div>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Etapa</th><th class="num">Costo</th><th class="num">%</th><th class="num">Tiempo</th></tr></thead>
+      <tbody>
+        <tr><td>Planear ángulos</td><td class="num">$0.13</td><td class="num">4%</td><td class="num">55 s</td></tr>
+        <tr><td>Subagentes</td><td class="num">$2.28</td><td class="num">78%</td><td class="num">~95 s c/u</td></tr>
+        <tr><td>Sintetizar</td><td class="num">$0.23</td><td class="num">8%</td><td class="num">93 s</td></tr>
+        <tr><td>Citas</td><td class="num">$0.29</td><td class="num">10%</td><td class="num">137 s</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>Calidad revisada a mano · Francisco Partners</h3>
+  <ul class="points">
+    <li><span class="k">21</span><span class="v">fuentes, casi todas primarias.</span></li>
+    <li><span class="k">19</span><span class="v">movimientos de portafolio entre marzo 2025 y agosto 2026.</span></li>
+    <li><span class="k">3</span><span class="v">contradicciones reportadas con ambas versiones.</span></li>
+    <li><span class="k">12</span><span class="v">huecos declarados en vez de rellenados.</span></li>
+  </ul>
+  <p class="note">La confianza varía entre fondos: Francisco Partners salió alta en los cinco puntos, LAB Ventures mayormente baja. Los 5 fondos corrieron antes de los filtros, así que no traen veredicto — es un tercer estado, no un "no califica".</p>
+</section>
+
+<section class="s" id="s8">
+  <span class="num">08</span>
+  <h2>Controles</h2>
+  <ul class="points">
+    <li><span class="k">Huecos</span><span class="v">Afirmar que algo no existe exige una fuente que confirme la ausencia.</span></li>
+    <li><span class="k">Excepción</span><span class="v">El portafolio publicado del fondo sí cuenta como negación con respaldo.</span></li>
+    <li><span class="k">Contradicciones</span><span class="v">Quedan las dos versiones con su fuente. El sistema no elige.</span></li>
+    <li><span class="k">Confianza</span><span class="v">Califica la evidencia, no al fondo.</span></li>
+    <li><span class="k">Sectores</span><span class="v">Validados en código. Lo que no cuadra sale en la columna de alertas.</span></li>
+    <li><span class="k">Acceso</span><span class="v">La BD Maestra se lee, nunca se escribe. No manda correos.</span></li>
+  </ul>
+  <div class="flag">Hueco abierto: fuera del mapa de sectores, el formato del reporte no se valida. Un reporte mal formado sale vacío y la corrida lo marca como exitosa. El agente de citas ya reescribió un reporte y perdió la cuarta parte del contenido sin marcar error.</div>
+</section>
+
+<section class="s" id="s9">
+  <span class="num">09</span>
+  <h2>Operación y responsables</h2>
+  <h3>Cómo se usa</h3>
+  <ul class="points">
+    <li><span class="k n">01</span><span class="v">Se lanza una tanda. El sistema salta los fondos que ya hizo.</span></li>
+    <li><span class="k n">02</span><span class="v">Cada fondo tarda unos 13 minutos. Una tanda de 20 son unas 4 horas.</span></li>
+    <li><span class="k n">03</span><span class="v">Se regenera el CRM. Conserva las notas de los socios.</span></li>
+    <li><span class="k n">04</span><span class="v">El socio lee el reporte con sus dos veredictos y sus fuentes.</span></li>
+    <li><span class="k n">05</span><span class="v">Marca re-investigar y la siguiente tanda lo corre primero.</span></li>
+  </ul>
+
+  <figure>
+    <div class="figscroll">
+    <svg viewBox="0 0 860 300" role="img" aria-label="Qué encuentra un socio en cada fila del CRM: identificación del fondo, los dos veredictos con su detalle, el reporte con citas, y la columna de alertas que indica cuándo no confiar en la fila.">
+      <g font-family="Arial, sans-serif" font-size="11" fill="currentColor">
+        <text x="0" y="14" font-size="10" opacity=".65">UNA FILA DEL CRM, POR BLOQUES</text>
+        <rect x="0" y="30" width="200" height="98" rx="3" fill="none" stroke="currentColor" stroke-width="1.3"/>
+        <text x="100" y="54" text-anchor="middle" font-weight="bold" font-size="12">Quién es</text>
+        <text x="100" y="76" text-anchor="middle" font-size="10">El fondo y su contacto</text>
+        <text x="100" y="94" text-anchor="middle" font-size="10">Los demás contactos</text>
+        <text x="100" y="112" text-anchor="middle" font-size="9" opacity=".65">tal como venían de la base</text>
+
+        <rect x="216" y="30" width="200" height="98" rx="3" fill="var(--accent-wash)" stroke="currentColor" stroke-width="1.6"/>
+        <text x="316" y="54" text-anchor="middle" font-weight="bold" font-size="12">Veredicto 1</text>
+        <text x="316" y="76" text-anchor="middle" font-size="10">Califica o no</text>
+        <text x="316" y="94" text-anchor="middle" font-size="10">Los tres criterios por separado</text>
+        <text x="316" y="112" text-anchor="middle" font-size="9" opacity=".65">con las empresas que lo sustentan</text>
+
+        <rect x="432" y="30" width="200" height="98" rx="3" fill="var(--accent-wash)" stroke="currentColor" stroke-width="1.6"/>
+        <text x="532" y="54" text-anchor="middle" font-weight="bold" font-size="12">Veredicto 2</text>
+        <text x="532" y="76" text-anchor="middle" font-size="10">Sector dominante</text>
+        <text x="532" y="94" text-anchor="middle" font-size="10">Empresas por sector y total</text>
+        <text x="532" y="112" text-anchor="middle" font-size="9" opacity=".65">la columna para priorizar</text>
+
+        <rect x="648" y="30" width="200" height="98" rx="3" fill="none" stroke="currentColor" stroke-width="1.3"/>
+        <text x="748" y="54" text-anchor="middle" font-weight="bold" font-size="12">El reporte</text>
+        <text x="748" y="76" text-anchor="middle" font-size="10">Con la fuente en cada dato</text>
+        <text x="748" y="94" text-anchor="middle" font-size="10">Contradicciones y huecos</text>
+        <text x="748" y="112" text-anchor="middle" font-size="9" opacity=".65">esto es lo que se lee</text>
+
+        <rect x="0" y="150" width="848" height="52" rx="3" fill="none" stroke="var(--accent-ink)" stroke-width="1.6"/>
+        <text x="424" y="172" text-anchor="middle" font-weight="bold" font-size="12" fill="var(--accent-ink)">Alertas de validación</text>
+        <text x="424" y="190" text-anchor="middle" font-size="10">Si trae texto, los conteos de esa fila no cuadran y hay que revisarla</text>
+
+        <text x="0" y="238" font-size="10" opacity=".65">TRES REGLAS DE LECTURA</text>
+        <text x="0" y="260" font-size="11">Un campo vacío significa que no encontró evidencia y prefirió callarse.</text>
+        <text x="0" y="278" font-size="11">Las contradicciones se resuelven a mano.</text>
+        <text x="0" y="296" font-size="11">Un veredicto negativo por falta de información no descalifica al fondo.</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption><strong>Figura 4.</strong> El sistema se detiene en el CRM. No manda correos ni decide a quién contactar.</figcaption>
+  </figure>
+
+  <div class="flag">Lanzar una tanda requiere terminal. Damián no puede correr el sistema solo, así que todavía no se puede declarar transferido.</div>
+
+  <ul class="points">
+    <li><span class="k">Damián</span><span class="v">Opera el día a día. <span class="pill done">confirmado</span></span></li>
+    <li><span class="k">Tino</span><span class="v">Dueño de negocio y firma. <span class="pill progress">propuesto</span></span></li>
+    <li><span class="k">Alex</span><span class="v">Construye y mantiene. <span class="pill progress">propuesto</span></span></li>
+    <li><span class="k">Bernardo y socios</span><span class="v">Usan el resultado en el CRM. <span class="pill done">confirmado</span></span></li>
+  </ul>
+</section>
+
+<section class="s" id="s10">
+  <span class="num">10</span>
+  <h2>Compromiso y evidencia</h2>
+  <p class="note">Los números comerciales son del corte 1-jun a 31-ago, anteriores a este sistema.</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Métrica</th><th class="num">Hoy</th><th class="num">Meta</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td>Socios activos</td><td class="num">1</td><td class="num">3 de 6</td><td><span class="pill pending">abajo</span></td></tr>
+      <tr><td>Fondos contactados</td><td class="num">12</td><td class="num">50</td><td><span class="pill pending">abajo</span></td></tr>
+      <tr><td>Respuestas</td><td class="num">≈4</td><td class="num">10</td><td><span class="pill progress">parcial</span></td></tr>
+      <tr><td>Juntas conseguidas</td><td class="num">4</td><td class="num">1</td><td><span class="pill done">superado</span></td></tr>
+    </tbody>
+  </table></div>
+  <h3>La base completa</h3>
+  <div class="stats">
+    <div class="stat"><div class="v">531</div><div class="l">fondos únicos, de 609 filas</div></div>
+    <div class="stat"><div class="v">~$1,540</div><div class="l">costo de investigarlos</div></div>
+    <div class="stat"><div class="v">~$227</div><div class="l">ahorro por dedupe</div></div>
+    <div class="stat"><div class="v">~113 h</div><div class="l">uno a la vez</div></div>
+  </div>
+  <p class="note">$2.90 por fondo es piso: los filtros agregan trabajo y un fondo que califica se investiga más a fondo. El tiempo baja corriendo varios a la vez; el costo no.</p>
+  <div class="flag">El dato del retainer de la junta del 4-sep no cuadra en fechas. Sin verificar contra la grabación, no se afirma nada.</div>
+</section>
+
+<section class="s" id="s11">
+  <span class="num">11</span>
+  <h2>Sprint de cierre · 10 días</h2>
+  <ul class="points">
+    <li><span class="k n">01</span><span class="v">Decidir con Tino dónde corre producción. La otra versión se congela.</span></li>
+    <li><span class="k n">02–03</span><span class="v">Correr los filtros contra 15 a 20 fondos y medir cuántos califican.</span></li>
+    <li><span class="k n">04</span><span class="v">Dimensionar el costo real de los 531 con ese porcentaje.</span></li>
+    <li><span class="k n">05</span><span class="v">Cerrar el hueco de validación del formato.</span></li>
+    <li><span class="k n">06</span><span class="v">Decidir si el resultado se escribe también a la BD Maestra.</span></li>
+    <li><span class="k n">07–08</span><span class="v">Damián corre una tanda con acompañamiento.</span></li>
+    <li><span class="k n">09</span><span class="v">Armar el Agent Delivery Pack.</span></li>
+    <li><span class="k n">10</span><span class="v">Demo ejecutiva y acta de aceptación.</span></li>
+  </ul>
+
+  <h3>Lo que el día 01 tiene que comparar</h3>
+  <div class="headline">n8n ya corre el filtro de calificación. Le falta todo lo demás que el CRM usa hoy.</div>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Capacidad</th><th>Script en la Mac mini</th><th>n8n</th></tr></thead>
+    <tbody>
+      <tr><td>Filtro de calificación A · B · C</td><td>sí</td><td>sí</td></tr>
+      <tr><td>Mapa sectorial y segundo veredicto</td><td>sí</td><td>no</td></tr>
+      <tr><td>Validación en código del mapa</td><td>sí</td><td>no</td></tr>
+      <tr><td>Duplicados colapsados, 609 a 531</td><td>sí</td><td>no</td></tr>
+      <tr><td>Tandas que saltan lo ya investigado</td><td>sí</td><td>no, un fondo por corrida</td></tr>
+      <tr><td>Registro por llamada con costo y tiempo</td><td>sí</td><td>no</td></tr>
+      <tr><td>Cómo se paga</td><td>suscripción de Claude Code</td><td>crédito de API, ya se agotó una vez</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Verificado el 7-sep leyendo los nodos de los dos workflows y las ejecuciones 122 a 137.</p>
+</section>
+
+<section class="s" id="s12">
+  <span class="num">12</span>
+  <h2>Demo y acta</h2>
+  <ul class="points">
+    <li><span class="k">Formato</span><span class="v">Un fondo real, abierto en el CRM tal como lo ve un socio.</span></li>
+    <li><span class="k">Quién opera</span><span class="v">Damián lanza la corrida, Tino presente.</span></li>
+    <li><span class="k">El acta</span><span class="v">Qué se vio, qué quedó abierto, si Damián puede operarlo solo.</span></li>
+    <li><span class="k">Cuándo</span><span class="v">Después del día 7 del sprint.</span></li>
+  </ul>
+</section>
+
+<section class="s" id="s13">
+  <span class="num">13</span>
+  <h2>Panel de cierre</h2>
+  <div class="stats">
+    <div class="stat"><div class="v">1</div><div class="l">corrida completa</div></div>
+    <div class="stat"><div class="v">0</div><div class="l">veredictos medidos</div></div>
+    <div class="stat"><div class="v">0</div><div class="l">corridas de Galera</div></div>
+    <div class="stat"><div class="v">0</div><div class="l">socios usando el CRM</div></div>
+    <div class="stat"><div class="v">531</div><div class="l">fondos por investigar</div></div>
+  </div>
+</section>
+
+<section class="s" id="s14">
+  <span class="num">14</span>
+  <h2>Mensaje a Galera</h2>
+  <p class="flag">Borrador. No enviar sin revisión de Tino.</p>
+  <blockquote>"El motor de investigación ya está corriendo. Por cada fondo revisa si cumple los tres criterios que definimos, mapea en qué industrias juega hoy con los nombres de sus empresas, junta la evidencia con su fuente y marca lo que no pudo confirmar. El resultado queda en un archivo que ustedes abren y filtran, con una columna donde el socio pide que un fondo se vuelva a investigar. Lo que sigue es correrlo con Damián para que él lo opere, y de ahí sale la fecha para verlo con el resto del equipo."</blockquote>
+</section>
+
+<section class="s" id="s15">
+  <span class="num">15</span>
+  <h2>Limitaciones</h2>
+  <ul class="points">
+    <li><span class="k">Alcance</span><span class="v">Solo el componente de investigación. El redactor de correos queda fuera.</span></li>
+    <li><span class="k">Estado</span><span class="v">Avance de trabajo. El reporte final se escribe con el build cerrado.</span></li>
+    <li><span class="k">Producción</span><span class="v">Dónde corre sigue sin decidirse. Las dos versiones ya corrieron, con alcance distinto.</span></li>
+    <li><span class="k">Veredictos</span><span class="v">Ninguno medido. Toda proyección de costo es un piso.</span></li>
+    <li><span class="k">Operabilidad</span><span class="v">Damián depende de Imara para lanzar corridas.</span></li>
+    <li><span class="k">Retainer</span><span class="v">Dato de la junta sin verificar.</span></li>
+    <li><span class="k">RACI</span><span class="v">Propuesta, no confirmación de Tino.</span></li>
+    <li><span class="k">Lenguaje</span><span class="v">Documento interno. La versión para Galera va agnóstica a la herramienta.</span></li>
+  </ul>
+</section>
+
+<section class="s" id="s16">
+  <span class="num">16</span>
+  <h2>Fuentes</h2>
+  <div class="tblwrap"><table>
+    <tbody>
+      <tr><td>Estándar de entrega de agentes REMA</td><td>v1.0, 3-sep · Drive <code>1GUNaeHsKXaz5ELKEbwV5hlDoZE8VEFkp</code></td></tr>
+      <tr><td>Junta Imara × Galera</td><td>4-sep · Read AI <code>01M1PXW1HPWSMM76S8G4S5X03X</code></td></tr>
+      <tr><td>Handoffs técnicos del pipeline</td><td>4 y 7-sep · contrato de datos, mapa sectorial, trampas, tandas y CRM</td></tr>
+      <tr><td>Handoff del encargo</td><td>Drive <code>1UHw-VSPpwfSdzztKjMTW2a1M8WZPq4Ng</code></td></tr>
+      <tr><td>Arquitectura del pipeline</td><td>v1 · Drive <code>1IUikOisu-3RO731Wc1UmCNhBrcxPjVTi</code></td></tr>
+      <tr><td>Corridas en n8n</td><td>7-sep · workflows <code>qZG1gDsMr6q9NcqU</code> y <code>96vuCeCuxkLx2pNa</code>, ejecuciones 122 a 137</td></tr>
+      <tr><td>Evidencia comercial a 90 días</td><td>Drive <code>1ZsVpB7EnsODOeAQkQHJld_cIX87tGdIxqHXe8BpkSw4</code></td></tr>
+      <tr><td>Corrida medida</td><td>5 fondos, 40 llamadas · <code>logs/20260904-151627/</code></td></tr>
+      <tr><td>BD Maestra</td><td>Google Sheet <code>1XnuTkmatBrRUZeEynNltQq8XED3Cxzqm2CXROBsBPxw</code></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+</div>
+
+<section class="bookend">
+  <div class="wrap">
+    <span class="kicker">Siguiente paso</span>
+    <h1 style="font-size:1.9rem;">Decidir dónde corre producción</h1>
+    <p>El sistema completo corre desde un script en la Mac mini. La versión en n8n ya corrió el filtro de calificación, sin el mapa sectorial ni el manejo de tandas.</p>
+    <p>Mantener las dos vivas duplica el trabajo en cada cambio. La decisión define cuánto soporte técnico va a necesitar Damián de forma permanente.</p>
+    <div class="meta">Documento vivo — se actualiza conforme avanza el sprint de cierre.</div>
+  </div>
+</section>
