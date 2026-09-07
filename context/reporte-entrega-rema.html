@@ -106,6 +106,7 @@
   .checklist li.done::before{content:'[x]';color:var(--status-done);}
   .checklist li.pending::before{content:'[ ]';color:var(--status-pending);}
 
+  .dod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 2.6rem;}
   .flag{font-size:.88rem;color:var(--status-pending);border-left:2px solid var(--status-pending);padding-left:.9rem;margin:1.2rem 0;max-width:44rem;}
   .note{font-size:.82rem;color:var(--muted);margin:.6rem 0 1.2rem;max-width:44rem;}
   blockquote{font-style:italic;border-left:2px solid var(--line);padding-left:1rem;margin:1rem 0;max-width:44rem;color:var(--ink);}
@@ -150,7 +151,6 @@
     <li><span class="n">13</span><a href="#s13">Panel de cierre</a></li>
     <li><span class="n">14</span><a href="#s14">Mensaje a Galera</a></li>
     <li><span class="n">15</span><a href="#s15">Limitaciones</a></li>
-    <li><span class="n">16</span><a href="#s16">Fuentes</a></li>
   </ol>
 </nav>
 
@@ -320,6 +320,17 @@
     <figcaption><strong>Figura 2.</strong> Los subagentes trabajan de uno en uno. La flecha de abajo es el único punto donde una decisión humana vuelve a entrar.</figcaption>
   </figure>
 
+  <h3>Los ángulos que arma el Lead</h3>
+  <ul class="points">
+    <li><span class="k">Calificación <span class="pill done">obligatorio</span></span><span class="v">Sede en EE.UU., portafolio en Food &amp; Beverage, vigencia de esas empresas. Siempre el primero.</span></li>
+    <li><span class="k">Tesis de valor</span><span class="v">Si el fondo tiene Operating Partners o terceriza la mejora operativa.</span></li>
+    <li><span class="k">Tamaño</span><span class="v">Más de $100M, medido en las portfolio companies, no en el fondo.</span></li>
+    <li><span class="k">Portafolio reciente</span><span class="v">Inversiones y salidas de los últimos 24 meses.</span></li>
+    <li><span class="k">Señal de actividad</span><span class="v">Fundraising en curso, fondo nuevo, socio nuevo, inversión anunciada.</span></li>
+    <li><span class="k">Contacto correcto</span><span class="v">El Operating Partner específico. Ángulo de persona, no de firma.</span></li>
+  </ul>
+  <p class="note">El Lead arma entre 2 y 6 ángulos por fondo. Nunca repite cobertura entre dos, y agrupa los del framework cuando le faltan varios a la vez.</p>
+
   <h3>Los dos veredictos</h3>
   <figure>
     <div class="figscroll">
@@ -332,7 +343,7 @@
         <line x1="430" y1="60" x2="430" y2="82" stroke="currentColor" stroke-width="1.2" marker-end="url(#a3)"/>
         <rect x="300" y="84" width="260" height="52" rx="3" fill="var(--accent-wash)" stroke="currentColor" stroke-width="1.8"/>
         <text x="430" y="106" text-anchor="middle" font-weight="bold">Un solo subagente</text>
-        <text x="430" y="123" text-anchor="middle" font-size="9" opacity=".75">clasifica lo que ya está leyendo · +$0.10 a $0.25</text>
+        <text x="430" y="123" text-anchor="middle" font-size="9" opacity=".75">clasifica lo que ya está leyendo</text>
         <line x1="360" y1="136" x2="230" y2="170" stroke="currentColor" stroke-width="1.2" marker-end="url(#a3)"/>
         <line x1="500" y1="136" x2="630" y2="170" stroke="currentColor" stroke-width="1.2" marker-end="url(#a3)"/>
 
@@ -376,42 +387,52 @@
   <span class="num">06</span>
   <h2>Definition of Done · 7 de 15</h2>
   <p class="note">Una casilla marcada exige un archivo, un registro o una firma.</p>
-  <ul class="checklist">
-    <li class="done">Sistema corriendo de punta a punta — 40 de 40 llamadas sin error.</li>
-    <li class="done">Registro auditable de cada llamada al modelo.</li>
-    <li class="done">Reglas de evidencia verificadas a mano sobre casos reales.</li>
-    <li class="done">Corrida por tandas, sin repetir lo ya investigado.</li>
-    <li class="done">Duplicados colapsados — 609 filas contra 531 fondos reales.</li>
-    <li class="done">Salida que un socio abre sin ayuda técnica.</li>
-    <li class="done">Mapa de sectores validado en código, con alertas en su propia columna.</li>
-    <li class="pending">Los dos veredictos medidos sobre 15 a 20 fondos.</li>
-    <li class="pending">Validación del resto del formato de salida.</li>
-    <li class="pending">Detección automática de la pérdida de contenido del agente de citas.</li>
-    <li class="pending">Decisión de dónde corre producción.</li>
-    <li class="pending">Una corrida operada por Damián.</li>
-    <li class="pending">Costo y tiempo dimensionados con los filtros puestos.</li>
-    <li class="pending">RACI firmado.</li>
-    <li class="pending">Acceso a la infraestructura de Galera.</li>
-  </ul>
+  <div class="dod-grid">
+    <div>
+      <h3>Completo · 7</h3>
+      <ul class="checklist">
+        <li class="done">Sistema corriendo de punta a punta — 40 de 40 llamadas sin error.</li>
+        <li class="done">Registro auditable de cada llamada al modelo.</li>
+        <li class="done">Reglas de evidencia verificadas a mano sobre casos reales.</li>
+        <li class="done">Corrida por tandas, sin repetir lo ya investigado.</li>
+        <li class="done">Duplicados colapsados — 609 filas contra 531 fondos reales.</li>
+        <li class="done">Salida que un socio abre sin ayuda técnica.</li>
+        <li class="done">Mapa de sectores validado en código, con alertas en su propia columna.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Pendiente · 8</h3>
+      <ul class="checklist">
+        <li class="pending">Los dos veredictos medidos sobre 15 a 20 fondos.</li>
+        <li class="pending">Validación del resto del formato de salida.</li>
+        <li class="pending">Detección automática de la pérdida de contenido del agente de citas.</li>
+        <li class="pending">Decisión de dónde corre producción.</li>
+        <li class="pending">Una corrida operada por Damián.</li>
+        <li class="pending">Costo y tiempo dimensionados con los filtros puestos.</li>
+        <li class="pending">RACI firmado.</li>
+        <li class="pending">Acceso a la infraestructura de Galera.</li>
+      </ul>
+    </div>
+  </div>
 </section>
 
 <section class="s" id="s7">
   <span class="num">07</span>
   <h2>Lo que se midió</h2>
   <div class="stats">
-    <div class="stat"><div class="v">$2.90</div><div class="l">por fondo</div></div>
+    <div class="stat"><div class="v">5</div><div class="l">fondos investigados</div></div>
     <div class="stat"><div class="v">12.8 min</div><div class="l">por fondo</div></div>
     <div class="stat"><div class="v">40 / 40</div><div class="l">llamadas sin error</div></div>
-    <div class="stat"><div class="v">0</div><div class="l">veredictos medidos</div></div>
+    <div class="stat"><div class="v">0</div><div class="l">veredictos ICP medidos</div></div>
   </div>
   <div class="tblwrap">
     <table>
-      <thead><tr><th>Etapa</th><th class="num">Costo</th><th class="num">%</th><th class="num">Tiempo</th></tr></thead>
+      <thead><tr><th>Etapa</th><th class="num">Tiempo</th></tr></thead>
       <tbody>
-        <tr><td>Planear ángulos</td><td class="num">$0.13</td><td class="num">4%</td><td class="num">55 s</td></tr>
-        <tr><td>Subagentes</td><td class="num">$2.28</td><td class="num">78%</td><td class="num">~95 s c/u</td></tr>
-        <tr><td>Sintetizar</td><td class="num">$0.23</td><td class="num">8%</td><td class="num">93 s</td></tr>
-        <tr><td>Citas</td><td class="num">$0.29</td><td class="num">10%</td><td class="num">137 s</td></tr>
+        <tr><td>Planear ángulos</td><td class="num">55 s</td></tr>
+        <tr><td>Subagentes</td><td class="num">~95 s c/u</td></tr>
+        <tr><td>Sintetizar</td><td class="num">93 s</td></tr>
+        <tr><td>Citas</td><td class="num">137 s</td></tr>
       </tbody>
     </table>
   </div>
@@ -428,6 +449,7 @@
 <section class="s" id="s8">
   <span class="num">08</span>
   <h2>Controles</h2>
+  <p class="note">Reglas que le impiden al sistema inventar o simplificar cuando no tiene evidencia suficiente.</p>
   <ul class="points">
     <li><span class="k">Huecos</span><span class="v">Afirmar que algo no existe exige una fuente que confirme la ausencia.</span></li>
     <li><span class="k">Excepción</span><span class="v">El portafolio publicado del fondo sí cuenta como negación con respaldo.</span></li>
@@ -498,8 +520,8 @@
 
   <ul class="points">
     <li><span class="k">Damián</span><span class="v">Opera el día a día. <span class="pill done">confirmado</span></span></li>
-    <li><span class="k">Tino</span><span class="v">Dueño de negocio y firma. <span class="pill progress">propuesto</span></span></li>
-    <li><span class="k">Alex</span><span class="v">Construye y mantiene. <span class="pill progress">propuesto</span></span></li>
+    <li><span class="k">Tino</span><span class="v">Dueño de negocio y firma.</span></li>
+    <li><span class="k">Alex</span><span class="v">Construye y mantiene.</span></li>
     <li><span class="k">Bernardo y socios</span><span class="v">Usan el resultado en el CRM. <span class="pill done">confirmado</span></span></li>
   </ul>
 </section>
@@ -520,11 +542,10 @@
   <h3>La base completa</h3>
   <div class="stats">
     <div class="stat"><div class="v">531</div><div class="l">fondos únicos, de 609 filas</div></div>
-    <div class="stat"><div class="v">~$1,540</div><div class="l">costo de investigarlos</div></div>
-    <div class="stat"><div class="v">~$227</div><div class="l">ahorro por dedupe</div></div>
-    <div class="stat"><div class="v">~113 h</div><div class="l">uno a la vez</div></div>
+    <div class="stat"><div class="v">78</div><div class="l">duplicados colapsados</div></div>
+    <div class="stat"><div class="v">~113 h</div><div class="l">investigando uno a la vez</div></div>
   </div>
-  <p class="note">$2.90 por fondo es piso: los filtros agregan trabajo y un fondo que califica se investiga más a fondo. El tiempo baja corriendo varios a la vez; el costo no.</p>
+  <p class="note">El tiempo por fondo es un piso: los filtros agregan trabajo, y un fondo que califica se investiga más a fondo. Baja corriendo varios en paralelo.</p>
   <div class="flag">El dato del retainer de la junta del 4-sep no cuadra en fechas. Sin verificar contra la grabación, no se afirma nada.</div>
 </section>
 
@@ -535,28 +556,12 @@
     <li><span class="k n">01</span><span class="v">Decidir con Tino dónde corre producción. La otra versión se congela.</span></li>
     <li><span class="k n">02–03</span><span class="v">Correr los filtros contra 15 a 20 fondos y medir cuántos califican.</span></li>
     <li><span class="k n">04</span><span class="v">Dimensionar el costo real de los 531 con ese porcentaje.</span></li>
-    <li><span class="k n">05</span><span class="v">Cerrar el hueco de validación del formato.</span></li>
+    <li><span class="k n">05</span><span class="v">Validar en código el resto del reporte. Hoy solo se valida el mapa de sectores.</span></li>
     <li><span class="k n">06</span><span class="v">Decidir si el resultado se escribe también a la BD Maestra.</span></li>
     <li><span class="k n">07–08</span><span class="v">Damián corre una tanda con acompañamiento.</span></li>
     <li><span class="k n">09</span><span class="v">Armar el Agent Delivery Pack.</span></li>
     <li><span class="k n">10</span><span class="v">Demo ejecutiva y acta de aceptación.</span></li>
   </ul>
-
-  <h3>Lo que el día 01 tiene que comparar</h3>
-  <div class="headline">n8n ya corre el filtro de calificación. Le falta todo lo demás que el CRM usa hoy.</div>
-  <div class="tblwrap"><table>
-    <thead><tr><th>Capacidad</th><th>Script en la Mac mini</th><th>n8n</th></tr></thead>
-    <tbody>
-      <tr><td>Filtro de calificación A · B · C</td><td>sí</td><td>sí</td></tr>
-      <tr><td>Mapa sectorial y segundo veredicto</td><td>sí</td><td>no</td></tr>
-      <tr><td>Validación en código del mapa</td><td>sí</td><td>no</td></tr>
-      <tr><td>Duplicados colapsados, 609 a 531</td><td>sí</td><td>no</td></tr>
-      <tr><td>Tandas que saltan lo ya investigado</td><td>sí</td><td>no, un fondo por corrida</td></tr>
-      <tr><td>Registro por llamada con costo y tiempo</td><td>sí</td><td>no</td></tr>
-      <tr><td>Cómo se paga</td><td>suscripción de Claude Code</td><td>crédito de API, ya se agotó una vez</td></tr>
-    </tbody>
-  </table></div>
-  <p class="note">Verificado el 7-sep leyendo los nodos de los dos workflows y las ejecuciones 122 a 137.</p>
 </section>
 
 <section class="s" id="s12">
@@ -594,32 +599,18 @@
   <h2>Limitaciones</h2>
   <ul class="points">
     <li><span class="k">Alcance</span><span class="v">Solo el componente de investigación. El redactor de correos queda fuera.</span></li>
+    <li><span class="k">Cobertura</span><span class="v">Solo fondos US-based con Food &amp; Beverage vigente. Fuera de ese perfil, el sistema no aplica.</span></li>
     <li><span class="k">Estado</span><span class="v">Avance de trabajo. El reporte final se escribe con el build cerrado.</span></li>
     <li><span class="k">Producción</span><span class="v">Dónde corre sigue sin decidirse. Las dos versiones ya corrieron, con alcance distinto.</span></li>
-    <li><span class="k">Veredictos</span><span class="v">Ninguno medido. Toda proyección de costo es un piso.</span></li>
+    <li><span class="k">Veredictos</span><span class="v">Ninguno medido sobre los criterios de calificación. Toda proyección de trabajo restante es un piso.</span></li>
+    <li><span class="k">Validación</span><span class="v">Solo el mapa de sectores se valida en código. El resto del reporte no.</span></li>
+    <li><span class="k">Citas</span><span class="v">El agente de citas ya perdió contenido de un reporte sin marcar error.</span></li>
+    <li><span class="k">Muestra</span><span class="v">La calidad se revisó a mano en un solo fondo, no a escala.</span></li>
     <li><span class="k">Operabilidad</span><span class="v">Damián depende de Imara para lanzar corridas.</span></li>
     <li><span class="k">Retainer</span><span class="v">Dato de la junta sin verificar.</span></li>
     <li><span class="k">RACI</span><span class="v">Propuesta, no confirmación de Tino.</span></li>
     <li><span class="k">Lenguaje</span><span class="v">Documento interno. La versión para Galera va agnóstica a la herramienta.</span></li>
   </ul>
-</section>
-
-<section class="s" id="s16">
-  <span class="num">16</span>
-  <h2>Fuentes</h2>
-  <div class="tblwrap"><table>
-    <tbody>
-      <tr><td>Estándar de entrega de agentes REMA</td><td>v1.0, 3-sep · Drive <code>1GUNaeHsKXaz5ELKEbwV5hlDoZE8VEFkp</code></td></tr>
-      <tr><td>Junta Imara × Galera</td><td>4-sep · Read AI <code>01M1PXW1HPWSMM76S8G4S5X03X</code></td></tr>
-      <tr><td>Handoffs técnicos del pipeline</td><td>4 y 7-sep · contrato de datos, mapa sectorial, trampas, tandas y CRM</td></tr>
-      <tr><td>Handoff del encargo</td><td>Drive <code>1UHw-VSPpwfSdzztKjMTW2a1M8WZPq4Ng</code></td></tr>
-      <tr><td>Arquitectura del pipeline</td><td>v1 · Drive <code>1IUikOisu-3RO731Wc1UmCNhBrcxPjVTi</code></td></tr>
-      <tr><td>Corridas en n8n</td><td>7-sep · workflows <code>qZG1gDsMr6q9NcqU</code> y <code>96vuCeCuxkLx2pNa</code>, ejecuciones 122 a 137</td></tr>
-      <tr><td>Evidencia comercial a 90 días</td><td>Drive <code>1ZsVpB7EnsODOeAQkQHJld_cIX87tGdIxqHXe8BpkSw4</code></td></tr>
-      <tr><td>Corrida medida</td><td>5 fondos, 40 llamadas · <code>logs/20260904-151627/</code></td></tr>
-      <tr><td>BD Maestra</td><td>Google Sheet <code>1XnuTkmatBrRUZeEynNltQq8XED3Cxzqm2CXROBsBPxw</code></td></tr>
-    </tbody>
-  </table></div>
 </section>
 
 </div>
