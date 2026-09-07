@@ -49,7 +49,7 @@ Aplica esto de forma concreta:
 - No metas un dato, una cifra o un nombre que nadie pidió, aunque lo tengas a la mano y sea
   relevante en abstracto — si no cambia la decisión del lector, se queda fuera.
 - No agregues una frase de tranquilidad ("esto no debería ser un problema", "no te preocupes por
-  esto") a menos que already haya evidencia concreta detrás. Una tranquilidad sin respaldo suena
+  esto") a menos que haya evidencia concreta detrás. Una tranquilidad sin respaldo suena
   hueca y a veces genera más duda que si no se dice nada.
 - Si una oración existe solo para que el mensaje "se sienta completo" o "bien explicado", táchala.
 
