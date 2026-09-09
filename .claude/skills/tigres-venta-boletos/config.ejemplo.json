@@ -1,0 +1,33 @@
+{
+  "_nota": "Copiar a config.json y llenar con los nombres reales de las columnas del export de Boleto Movil. Los PENDIENTE salen del primer archivo crudo que mande Fernando.",
+
+  "export": {
+    "archivo": "entradas/boletomovil_periodo.xlsx",
+    "hoja": null,
+    "fila_encabezado": 1,
+    "columnas": {
+      "zona": "PENDIENTE",
+      "boletos": "PENDIENTE",
+      "importe": "PENDIENTE",
+      "partido": "PENDIENTE",
+      "fecha": "PENDIENTE"
+    }
+  },
+
+  "catalogo": {
+    "archivo": "catalogo-zonas.csv",
+    "columna_origen": "zona_boletomovil",
+    "columna_destino": "zona_fernando"
+  },
+
+  "maestro": {
+    "archivo": "PENDIENTE",
+    "hoja": "PENDIENTE",
+    "carpeta_respaldos": "respaldos/"
+  },
+
+  "salidas": {
+    "corte": "salidas/corte_normalizado.csv",
+    "reporte": "salidas/reporte_mapeo.md"
+  }
+}
