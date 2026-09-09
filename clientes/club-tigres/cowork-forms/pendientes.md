@@ -33,6 +33,20 @@ pregunta de cantidad, y se capturan al final sin rehacer nada.
       dos con acento en la parte de antes del arroba, que Microsoft 365
       no permite, y uno terminado en `.mxx`.
 
+## Al momento de la construcción
+
+- [ ] **Agregar "Archivo del evento" (Sección 6) después de duplicar.**
+      Alex está construyendo el formulario desde una cuenta personal
+      de Microsoft, sin OneDrive empresarial. Esa cuenta no ofrece el
+      tipo de pregunta "Carga de archivos" — ni siquiera aparece en el
+      menú. Queda pendiente hasta que Claudia duplique el formulario a
+      su cuenta del club; ahí sí va a estar disponible.
+- [ ] **Revisar "solo mi organización" en Configuración, ya en la cuenta de Claudia.**
+      Es probable que en la cuenta personal esa opción no aparezca —
+      solo "cualquier persona con el vínculo". No es un error: se
+      configura bien hasta que el formulario ya viva en la cuenta de
+      trabajo del club.
+
 ## De fondo
 
 - [ ] **Dónde vive el rol de entrenamientos.** El reglamento prohíbe
