@@ -67,6 +67,28 @@ Every change to any agent's file — including changes an agent makes to its
 own file later — must be something I can diff and revert. Not something I
 have to reconstruct from memory.
 
+## House rule: toda propuesta lleva visual
+
+Alex no procesa bien bloques largos de texto. Cualquier propuesta, plan de
+trabajo o alcance de cliente se entrega **también** como una página visual,
+no solo como prosa en el chat.
+
+Reglas del visual:
+
+- Publicar como Artifact. Una página, panorama completo: entregables, piezas
+  que se construyen, fases, qué entra y qué no, qué se necesita del cliente.
+- Sigue el skill `imara-client-branding` — Dirección A (editorial, restraint
+  total) para material de sala de cliente. Serif con carácter para títulos,
+  Arial para cuerpo, un solo acento ámbar, fondo oscuro solo en apertura y
+  cierre.
+- Tiene que ser presentable al cliente tal cual, sin limpiar nada. Por eso:
+  cero notas internas, cero banderas, cero riesgos, cero números sin validar,
+  y **nunca el precio** salvo que Tino lo confirme en esa misma conversación.
+- Lo interno (banderas, riesgos, qué checar con Tino, puntos de junta) va
+  aparte, en el chat o en su propia página. Nunca mezclado con lo que ve el
+  cliente.
+- Sin nombrar la herramienta de IA detrás del entregable.
+
 ## Tooling: where the MCP connections live
 
 Google Drive, Google Calendar, ClickUp and Plaud are **account-level
