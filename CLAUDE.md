@@ -67,27 +67,46 @@ Every change to any agent's file — including changes an agent makes to its
 own file later — must be something I can diff and revert. Not something I
 have to reconstruct from memory.
 
+## Skills del proyecto
+
+Estos tres gobiernan todo lo que yo firmo. No son opcionales y no esperan a que
+yo los pida.
+
+- **alex-voice** — la voz. Aplica a TODO texto en prosa de más de una oración
+  que yo vaya a firmar o enviar, incluido el texto dentro de un artifact, una
+  slide o un reporte. Su regla central es economía de información: si quitar una
+  oración no cambia lo que hace el lector, sobra. Vive a nivel cuenta.
+- **imara-report-visual** — la maqueta de reportes y documentos largos. Una
+  línea, una idea. Figuras SVG dibujadas dentro del documento. Un solo acento.
+  Vive en `.claude/skills/` de este repo.
+- **imara-client-branding** — estructura, sistema visual y reglas de marca de
+  Imara. Vive a nivel cuenta.
+
+Orden cuando aplican varios: primero la estructura con imara-client-branding,
+luego la maqueta con imara-report-visual, y al final alex-voice encima, palabra
+por palabra.
+
 ## House rule: toda propuesta lleva visual
 
-Alex no procesa bien bloques largos de texto. Cualquier propuesta, plan de
-trabajo o alcance de cliente se entrega **también** como una página visual,
-no solo como prosa en el chat.
+No proceso bien bloques largos de texto. Cualquier propuesta, plan de trabajo o
+alcance de cliente se entrega **también** como una página visual publicada como
+Artifact, no solo como prosa en el chat.
 
 Reglas del visual:
 
-- Publicar como Artifact. Una página, panorama completo: entregables, piezas
-  que se construyen, fases, qué entra y qué no, qué se necesita del cliente.
-- Sigue el skill `imara-client-branding` — Dirección A (editorial, restraint
-  total) para material de sala de cliente. Serif con carácter para títulos,
-  Arial para cuerpo, un solo acento ámbar, fondo oscuro solo en apertura y
-  cierre.
-- Tiene que ser presentable al cliente tal cual, sin limpiar nada. Por eso:
-  cero notas internas, cero banderas, cero riesgos, cero números sin validar,
-  y **nunca el precio** salvo que Tino lo confirme en esa misma conversación.
-- Lo interno (banderas, riesgos, qué checar con Tino, puntos de junta) va
-  aparte, en el chat o en su propia página. Nunca mezclado con lo que ve el
-  cliente.
+- Una página, panorama completo: entregables, piezas que se construyen, fases,
+  qué entra y qué no, qué se necesita del cliente.
+- Presentable al cliente tal cual, sin limpiar nada. Cero notas internas, cero
+  banderas, cero riesgos, cero números sin validar, y **nunca el precio** salvo
+  que Tino lo confirme en esa misma conversación.
+- Lo interno va aparte, en el chat o en su propia página. Nunca mezclado con lo
+  que ve el cliente. Si la página interna existe, que se vea distinta de un
+  vistazo, para que no se confundan al compartir pantalla.
 - Sin nombrar la herramienta de IA detrás del entregable.
+
+El hook de `.claude/settings.json` corre `.claude/hooks/voice-gate.sh` antes de
+cada publicación de Artifact y recuerda este checklist. El hook avisa; no
+sustituye invocar los skills.
 
 ## Tooling: where the MCP connections live
 
