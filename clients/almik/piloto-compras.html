@@ -1,0 +1,420 @@
+<title>Piloto de compras Almik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --paper-raised:#FAF8F5;
+    --ink:#0A1524;
+    --muted:#3E4754;
+    --line:#E4E3DF;
+    --accent:#FFB24A;
+    --accent-ink:#8A5300;
+    --accent-wash:#FFF3E0;
+    --status-done:#2F6B4F;
+    --status-pending:#A23B2E;
+    --font-display:'Fraunces', Cambria, Georgia, 'Times New Roman', serif;
+    --font-body: Arial, Helvetica, 'Segoe UI', sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0A1524;--paper-raised:#101E30;--ink:#ECEEF1;--muted:#A9B2BF;--line:#26364A;
+      --accent:#FFB24A;--accent-ink:#FFC876;--accent-wash:#2A2113;
+      --status-done:#57B98A;--status-pending:#E2725A;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0A1524;--paper-raised:#101E30;--ink:#ECEEF1;--muted:#A9B2BF;--line:#26364A;
+    --accent:#FFB24A;--accent-ink:#FFC876;--accent-wash:#2A2113;
+    --status-done:#57B98A;--status-pending:#E2725A;
+  }
+
+  *{box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--font-body);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:56rem;margin:0 auto;padding:0 1.5rem;}
+  h1,h2,h3{font-family:var(--font-display);font-weight:600;text-wrap:balance;color:var(--ink);}
+  h2{font-size:1.45rem;margin:0 0 1.1rem;}
+  h3{font-size:.95rem;margin:1.8rem 0 .6rem;text-transform:uppercase;letter-spacing:.06em;font-family:var(--font-body);font-weight:700;color:var(--muted);}
+  a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px;}
+  .kicker{text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;color:var(--accent-ink);font-weight:700;}
+  section.bookend .kicker{color:var(--accent);}
+
+  section.bookend{background:var(--ink);color:var(--paper);}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) section.bookend{background:#04070C;}}
+  :root[data-theme="dark"] section.bookend{background:#04070C;}
+  section.bookend .wrap{padding-top:4.5rem;padding-bottom:4.5rem;}
+  section.bookend h1{color:var(--paper);font-size:2.4rem;line-height:1.08;margin:.6rem 0 1rem;}
+  section.bookend p{color:#C9CCD3;max-width:38rem;margin:0 0 .8rem;}
+  section.bookend .meta{margin-top:2.2rem;font-size:.85rem;color:#8B909B;border-top:1px solid #2A2F3A;padding-top:1.2rem;}
+
+  nav.index{padding:2.4rem 0 1.2rem;border-bottom:1px solid var(--line);}
+  nav.index ol{list-style:none;margin:0;padding:0;columns:2;column-gap:2rem;}
+  nav.index li{margin-bottom:.5rem;break-inside:avoid;font-size:.9rem;}
+  nav.index a{color:var(--muted);}
+  nav.index .n{font-family:var(--font-display);color:var(--accent-ink);font-weight:600;margin-right:.4rem;}
+
+  section.s{padding:2.8rem 0;border-bottom:1px solid var(--line);}
+  section.s .num{font-family:var(--font-display);color:var(--accent-ink);font-size:1rem;font-weight:600;}
+
+  .points{list-style:none;margin:0 0 1.2rem;padding:0;max-width:46rem;}
+  .points li{
+    display:grid;grid-template-columns:auto minmax(0,1fr);gap:.9rem;align-items:baseline;
+    padding:.62rem 0;border-top:1px solid var(--line);font-size:.95rem;
+  }
+  .points li:last-child{border-bottom:1px solid var(--line);}
+  .points .k{font-weight:700;white-space:nowrap;}
+  .points .k.n{font-family:var(--font-display);color:var(--accent-ink);font-size:1.05rem;}
+  .points .v{color:var(--muted);}
+  .points li.solo{grid-template-columns:1fr;}
+
+  .headline{
+    font-family:var(--font-display);font-size:1.15rem;font-weight:600;line-height:1.4;
+    margin:0 0 1.2rem;padding:1rem 1.2rem;background:var(--paper-raised);
+    border-left:3px solid var(--accent);max-width:46rem;
+  }
+
+  .tblwrap{overflow-x:auto;margin:1rem 0 1.4rem;border:1px solid var(--line);}
+  table{border-collapse:collapse;width:100%;font-size:.87rem;}
+  th,td{text-align:left;padding:.5rem .7rem;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{background:var(--paper-raised);font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
+  tr:last-child td{border-bottom:none;}
+  td.num, th.num{font-variant-numeric:tabular-nums;}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:1.2rem 0 1.6rem;}
+  .stat{background:var(--paper);padding:.9rem 1rem;}
+  .stat .v{font-family:var(--font-display);font-size:1.5rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1;}
+  .stat .l{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:.35rem;}
+
+  figure{margin:1.4rem 0 2rem;}
+  figure svg{max-width:100%;height:auto;display:block;}
+  figcaption{font-size:.8rem;color:var(--muted);margin-top:.6rem;max-width:44rem;}
+  .figscroll{overflow-x:auto;}
+
+  .flag{font-size:.88rem;color:var(--status-pending);border-left:2px solid var(--status-pending);padding-left:.9rem;margin:1.2rem 0;max-width:44rem;}
+  .note{font-size:.82rem;color:var(--muted);margin:.6rem 0 1.2rem;max-width:44rem;}
+
+  @media (max-width:600px){
+    nav.index ol{columns:1;}
+    section.bookend h1{font-size:1.85rem;}
+    .points li{grid-template-columns:1fr;gap:.15rem;}
+  }
+</style>
+
+<section class="bookend">
+  <div class="wrap">
+    <p class="kicker">Imara &times; Almik &middot; Confidencial</p>
+    <h1>Piloto de IA en compras</h1>
+    <p>Compras opera con su contexto ordenado y con cuatro agentes que Julia dirige.</p>
+    <p class="meta">
+      120 días &middot; una sola área &middot; alcance cerrado<br>
+      Champion: Julia &middot; respaldo: Ileana &middot; patrocinador: Eugenio Aldape<br>
+      Imara: Constantino Madero, Alex Ruiz
+    </p>
+  </div>
+</section>
+
+<nav class="index">
+  <div class="wrap">
+    <ol>
+      <li><span class="n">01</span><a href="#porque">Por qué compras</a></li>
+      <li><span class="n">02</span><a href="#entregables">Qué se llevan</a></li>
+      <li><span class="n">03</span><a href="#agentes">Los cuatro agentes</a></li>
+      <li><span class="n">04</span><a href="#mecanismo">Cómo funciona</a></li>
+      <li><span class="n">05</span><a href="#plan">El plan</a></li>
+      <li><span class="n">06</span><a href="#alcance">Alcance</a></li>
+      <li><span class="n">07</span><a href="#almik">Qué necesitamos de Almik</a></li>
+      <li><span class="n">08</span><a href="#medicion">Cómo se mide</a></li>
+    </ol>
+  </div>
+</nav>
+
+<section class="s" id="porque">
+  <div class="wrap">
+    <span class="num">01</span>
+    <h2>Por qué compras</h2>
+    <p class="headline">Producción, ventas e inventario dependen de lo que compras decida. Es donde una mejora se siente en toda la planta.</p>
+    <ul class="points">
+      <li><span class="k">Inventario</span><span class="v">Ya bajaron los días de materia prima. Falta que la decisión de qué pedir se sostenga con método.</span></li>
+      <li><span class="k">China</span><span class="v">Varios proveedores, un contenedor al mes. Qué pedido sube a qué embarque se decide a mano.</span></li>
+      <li><span class="k">El área</span><span class="v">Julia llegó con perfil analítico. Lo que le falta es equipo.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="s" id="entregables">
+  <div class="wrap">
+    <span class="num">02</span>
+    <h2>Qué se llevan</h2>
+    <p class="note">Tres cosas quedan en la nube de Almik, documentadas y funcionando. En este orden, porque cada una necesita la anterior.</p>
+    <ul class="points">
+      <li><span class="k n">01</span><span class="v"><strong>Mapa de alto nivel de Almik.</strong> Qué pasa cuando entra un pedido, quién decide qué, dónde vive cada dato. Compras es el único tramo a fondo.</span></li>
+      <li><span class="k n">02</span><span class="v"><strong>La capa de contexto de compras.</strong> Catálogo de proveedores limpio, maestro de materia prima, histórico ordenado y las reglas del área por escrito.</span></li>
+      <li><span class="k n">03</span><span class="v"><strong>Cuatro agentes que Julia opera.</strong> Cada uno con su ficha de una página y un punto donde decide una persona.</span></li>
+    </ul>
+    <p class="note">Imara hace la limpieza. Julia valida lo que solo ella sabe: qué proveedor sigue vivo y cuál ya no se usa.</p>
+  </div>
+</section>
+
+<section class="s" id="agentes">
+  <div class="wrap">
+    <span class="num">03</span>
+    <h2>Los cuatro agentes</h2>
+    <p class="headline">Ninguno compra solo. Julia decide en los cuatro.</p>
+    <div class="tblwrap">
+      <table>
+        <thead>
+          <tr><th>Agente</th><th>Recibe</th><th>Entrega</th><th>Julia</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Bobina</strong><br><span class="v">Reposición</span></td>
+            <td>El export de inventario y compras de Odoo.</td>
+            <td>Qué está por faltar y qué sobra, con cantidad sugerida.</td>
+            <td>Decide qué pedir.</td>
+          </tr>
+          <tr>
+            <td><strong>Matou</strong><br><span class="v">Embarques China</span></td>
+            <td>Las órdenes a China y el estatus de cada una.</td>
+            <td>Qué orden va en qué embarque, qué falta para llenar el contenedor, qué se atrasó.</td>
+            <td>Decide el embarque.</td>
+          </tr>
+          <tr>
+            <td><strong>Estiba</strong><br><span class="v">Analista</span></td>
+            <td>Un reporte, o el renglón de un proveedor o de un código.</td>
+            <td>Qué compramos, a qué precio, cómo va contra el año anterior.</td>
+            <td>Pide y revisa.</td>
+          </tr>
+          <tr>
+            <td><strong>Guía</strong><br><span class="v">Cotizador</span></td>
+            <td>El aviso de que un precio cruzó el umbral acordado.</td>
+            <td>La solicitud de cotización redactada y las respuestas en una tabla.</td>
+            <td>Aprueba el envío y decide con quién.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Los nombres salen de su mundo: la bobina que se repone, la estiba de un contenedor, la guía que acompaña un embarque. <em>Matou</em> es muelle en mandarín.</p>
+    <p class="flag">Bobina depende de que los exports de inventario lleguen limpios. Si en la fase de contexto vemos que no, Matou se adelanta. Preferimos tres agentes que se usan todos los días a cuatro con uno en el que nadie confía.</p>
+  </div>
+</section>
+
+<section class="s" id="mecanismo">
+  <div class="wrap">
+    <span class="num">04</span>
+    <h2>Cómo funciona</h2>
+    <figure>
+      <div class="figscroll">
+        <svg viewBox="0 0 760 310" role="img" aria-label="Los datos de Almik se limpian en una capa de contexto, alimentan a los cuatro agentes, y todo lo que los agentes proponen pasa por Julia antes de ejecutarse. Julia también corrige la capa de contexto." style="font-family:Arial,Helvetica,sans-serif;color:currentColor">
+          <defs>
+            <marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 z" fill="currentColor"/>
+            </marker>
+            <marker id="arA" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 z" fill="var(--accent-ink)"/>
+            </marker>
+          </defs>
+
+          <!-- 1 fuentes -->
+          <rect x="8" y="66" width="126" height="104" fill="none" stroke="currentColor" stroke-width="1"/>
+          <text x="18" y="86" font-size="11" font-weight="bold" fill="currentColor">Lo que ya existe</text>
+          <text x="18" y="106" font-size="10" fill="currentColor">Exports de Odoo</text>
+          <text x="18" y="123" font-size="10" fill="currentColor">Archivo de compras</text>
+          <text x="18" y="140" font-size="10" fill="currentColor">Órdenes a China</text>
+          <text x="18" y="157" font-size="10" fill="currentColor">Reglas no escritas</text>
+
+          <text x="146" y="106" font-size="9" fill="currentColor">se limpia</text>
+          <line x1="134" y1="118" x2="196" y2="118" stroke="currentColor" stroke-width="1" marker-end="url(#ar)"/>
+
+          <!-- 2 contexto -->
+          <rect x="204" y="66" width="118" height="104" fill="none" stroke="currentColor" stroke-width="1"/>
+          <text x="214" y="86" font-size="11" font-weight="bold" fill="currentColor">Capa de</text>
+          <text x="214" y="101" font-size="11" font-weight="bold" fill="currentColor">contexto</text>
+          <text x="214" y="121" font-size="10" fill="currentColor">Proveedores</text>
+          <text x="214" y="138" font-size="10" fill="currentColor">Materia prima</text>
+          <text x="214" y="155" font-size="10" fill="currentColor">Histórico y reglas</text>
+
+          <text x="334" y="106" font-size="9" fill="currentColor">alimenta</text>
+          <line x1="322" y1="118" x2="384" y2="118" stroke="currentColor" stroke-width="1" marker-end="url(#ar)"/>
+
+          <!-- 3 agentes -->
+          <rect x="392" y="66" width="112" height="104" fill="none" stroke="currentColor" stroke-width="1"/>
+          <text x="402" y="86" font-size="11" font-weight="bold" fill="currentColor">Cuatro agentes</text>
+          <text x="402" y="106" font-size="10" fill="currentColor">Bobina</text>
+          <text x="402" y="123" font-size="10" fill="currentColor">Matou</text>
+          <text x="402" y="140" font-size="10" fill="currentColor">Estiba</text>
+          <text x="402" y="157" font-size="10" fill="currentColor">Guía</text>
+
+          <text x="516" y="106" font-size="9" fill="currentColor">proponen</text>
+          <line x1="504" y1="118" x2="566" y2="118" stroke="currentColor" stroke-width="1" marker-end="url(#ar)"/>
+
+          <!-- 4 Julia: el punto que importa -->
+          <rect x="574" y="66" width="86" height="104" fill="var(--accent-wash)" stroke="var(--accent-ink)" stroke-width="2"/>
+          <text x="584" y="92" font-size="13" font-weight="bold" fill="var(--accent-ink)">Julia</text>
+          <text x="584" y="112" font-size="10" fill="var(--accent-ink)">decide</text>
+          <text x="584" y="129" font-size="10" fill="var(--accent-ink)">siempre</text>
+          <text x="584" y="146" font-size="10" fill="var(--accent-ink)">ella</text>
+
+          <text x="672" y="106" font-size="9" fill="currentColor">ejecuta</text>
+          <line x1="660" y1="118" x2="712" y2="118" stroke="currentColor" stroke-width="1" marker-end="url(#ar)"/>
+          <text x="700" y="140" font-size="10" font-weight="bold" fill="currentColor" text-anchor="middle">La orden,</text>
+          <text x="700" y="155" font-size="10" font-weight="bold" fill="currentColor" text-anchor="middle">el embarque,</text>
+          <text x="700" y="170" font-size="10" font-weight="bold" fill="currentColor" text-anchor="middle">la cotización</text>
+
+          <!-- retorno: Julia corrige el contexto -->
+          <path d="M 617 170 L 617 226 L 263 226 L 263 172" fill="none" stroke="var(--accent-ink)" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arA)"/>
+          <text x="440" y="244" font-size="10" fill="var(--accent-ink)" text-anchor="middle">Julia corrige el contexto cuando algo sale mal. Los agentes mejoran con eso.</text>
+
+          <text x="8" y="284" font-size="10" fill="currentColor">Ningún agente escribe en Odoo ni manda nada al proveedor por su cuenta.</text>
+        </svg>
+      </div>
+      <figcaption>Todo lo que los agentes producen pasa por Julia antes de convertirse en una acción. El contexto ordenado es lo que hace que contesten con datos de Almik.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="s" id="plan">
+  <div class="wrap">
+    <span class="num">05</span>
+    <h2>El plan</h2>
+    <div class="stats">
+      <div class="stat"><div class="v">18</div><div class="l">Semanas</div></div>
+      <div class="stat"><div class="v">1</div><div class="l">Área</div></div>
+      <div class="stat"><div class="v">3</div><div class="l">Entregables</div></div>
+      <div class="stat"><div class="v">4</div><div class="l">Agentes</div></div>
+    </div>
+    <div class="tblwrap">
+      <table>
+        <thead>
+          <tr><th class="num">Fase</th><th>Qué hacemos</th><th>Qué queda</th><th class="num">Semanas</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="num"><strong>01</strong> Arranque</td>
+            <td>Entrevista con Julia. Sesión con Eugenio. Mapa del proceso como opera hoy. Reglas y umbrales. Accesos y licencias.</td>
+            <td>Reglas del área acordadas. Mapa de alto nivel, primera versión.</td>
+            <td class="num">2</td>
+          </tr>
+          <tr>
+            <td class="num"><strong>02</strong> Contexto</td>
+            <td>Limpieza del catálogo de proveedores, del maestro de materia prima y del histórico. Julia valida.</td>
+            <td>La capa de contexto, en la carpeta de Almik.</td>
+            <td class="num">4</td>
+          </tr>
+          <tr>
+            <td class="num"><strong>03</strong> Agentes</td>
+            <td>Un agente cada diez días: Bobina, Matou, Estiba, Guía. Sesión semanal con Julia.</td>
+            <td>Agentes en uso, cada uno con su ficha.</td>
+            <td class="num">6</td>
+          </tr>
+          <tr>
+            <td class="num"><strong>04</strong> Operación</td>
+            <td>Julia opera con Imara atrás. Medición de antes y después. Sesión de cierre con Eugenio.</td>
+            <td>Reporte de cierre y recomendación de siguiente área.</td>
+            <td class="num">5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Las fases se traslapan. Las duraciones son aproximadas: la limpieza de datos manda. La fecha de cierre no se mueve. Diciembre está adentro.</p>
+  </div>
+</section>
+
+<section class="s" id="alcance">
+  <div class="wrap">
+    <span class="num">06</span>
+    <h2>Alcance</h2>
+    <p class="headline">Todo lo de la derecha se puede hacer. Queda fuera porque ahora diluye compras.</p>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>Entra</th><th>No entra</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Mapa de alto nivel de Almik</td>
+            <td>Alta de códigos nuevos con reglas y aprobaciones</td>
+          </tr>
+          <tr>
+            <td>La capa de contexto de compras</td>
+            <td>Producción y planeación de planta</td>
+          </tr>
+          <tr>
+            <td>Cuatro agentes documentados y en uso</td>
+            <td>Integración directa con Odoo. Trabajamos con los reportes que ya exporta</td>
+          </tr>
+          <tr>
+            <td>Sesión semanal de trabajo con Julia</td>
+            <td>Consejo asesor de agentes para estrategia</td>
+          </tr>
+          <tr>
+            <td>Medición de antes y después, y reporte de cierre</td>
+            <td>Prospección en Estados Unidos</td>
+          </tr>
+          <tr>
+            <td>Acompañamiento a la junta de planeación de octubre</td>
+            <td>Mapa detallado de todas las áreas</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>Capacitación general en IA a todo el equipo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Lo de la derecha se cotiza por separado, cuando compras haya demostrado que mueve algo. Ahí entra también Fleja, el agente negociador, que se cambió por Matou a petición de Almik.</p>
+  </div>
+</section>
+
+<section class="s" id="almik">
+  <div class="wrap">
+    <span class="num">07</span>
+    <h2>Qué necesitamos de Almik</h2>
+    <ul class="points">
+      <li><span class="k">Julia</span><span class="v">Cuatro horas a la semana protegidas. Ileana como respaldo, sin horas comprometidas.</span></li>
+      <li><span class="k">Eugenio</span><span class="v">40 minutos la primera semana y 30 minutos al mes.</span></li>
+      <li><span class="k">Carpeta</span><span class="v">Una carpeta compartida en la nube de Almik donde caen los exports de Odoo.</span></li>
+      <li><span class="k">Archivos</span><span class="v">El archivo de compras que usan hoy y el histórico, en el formato en que esté.</span></li>
+      <li><span class="k">Licencias</span><span class="v">Dos o tres de la herramienta de IA, por cuenta de Almik. El administrador debe ser sistemas, no compras.</span></li>
+      <li><span class="k">Sistemas</span><span class="v">Una persona que dé accesos.</span></li>
+    </ul>
+    <h3>Cómo nos comunicamos</h3>
+    <ul class="points">
+      <li><span class="k">Semanal</span><span class="v">Una hora de trabajo con Julia. Presencial cuando toque liberar un agente.</span></li>
+      <li><span class="k">Quincenal</span><span class="v">Reporte corto a Eugenio y a Poncho: qué se construyó, qué usa Julia, qué sigue, qué necesitamos.</span></li>
+      <li><span class="k">Mensual</span><span class="v">30 minutos con Eugenio.</span></li>
+      <li><span class="k">Siempre</span><span class="v">Todo lo que construimos vive en la carpeta de Almik.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="s" id="medicion">
+  <div class="wrap">
+    <span class="num">08</span>
+    <h2>Cómo se mide</h2>
+    <p class="headline">Un punto de partida medido al arranque y la misma medición al cierre.</p>
+    <h3>Lo que registramos las primeras semanas</h3>
+    <ul class="points">
+      <li><span class="k">Reportes</span><span class="v">Cuánto tiempo se va en armarlos.</span></li>
+      <li><span class="k">Órdenes</span><span class="v">Cuántas salen con oportunidades.</span></li>
+      <li><span class="k">Cotización</span><span class="v">Cuánto tarda desde que se pide hasta que se decide.</span></li>
+      <li><span class="k">China</span><span class="v">Cuántos pedidos llegaron en el embarque que se planeó.</span></li>
+    </ul>
+    <h3>Lo que contestamos al cierre</h3>
+    <ul class="points">
+      <li class="solo"><span class="v">¿Cómo se trabajaba antes?</span></li>
+      <li class="solo"><span class="v">¿Qué nos propusimos y logramos?</span></li>
+      <li class="solo"><span class="v">¿Qué no logramos y por qué?</span></li>
+      <li class="solo"><span class="v">¿Qué hace hoy el equipo que antes no podía por falta de tiempo o de datos?</span></li>
+    </ul>
+    <p class="note">Las metas numéricas se fijan con Julia en el arranque, cuando tengamos el punto de partida medido.</p>
+    <p class="flag">Por confirmar con Almik: la fecha de la junta de planeación de octubre, y cuántas compradoras entran a la medición del arranque. <strong>[A VALIDAR]</strong></p>
+  </div>
+</section>
+
+<section class="bookend">
+  <div class="wrap">
+    <p class="kicker">Siguiente paso</p>
+    <h1>Entrevista con Julia y sesión con Eugenio.</h1>
+    <p>Con eso cerramos las reglas del área y arranca la limpieza.</p>
+  </div>
+</section>

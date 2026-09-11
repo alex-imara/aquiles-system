@@ -1,0 +1,252 @@
+<title>Guion de junta Almik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap">
+<style>
+  /* Página interna. Tema oscuro fijo a propósito: se distingue de un vistazo
+     de la página de cliente, y se lee discreta en el celular. */
+  :root{
+    --bg:#0B1320;
+    --surface:#131F2E;
+    --fg:#ECEFF3;
+    --muted:#8E9AAB;
+    --line:#26364A;
+    --accent:#FFB24A;
+    --alert:#E2725A;
+    --ok:#57B98A;
+    --display:'Fraunces', Cambria, Georgia, serif;
+    --body: Arial, Helvetica, 'Segoe UI', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.5;font-size:15px;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:44rem;margin:0 auto;padding-inline:1.15rem;}
+
+  header{border-bottom:1px solid var(--line);}
+  header .wrap{padding-block:1.9rem 1.5rem;}
+  .interno{
+    display:inline-block;border:1px solid var(--alert);color:var(--alert);
+    font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    padding:.24rem .55rem;margin-bottom:.9rem;
+  }
+  h1{font-family:var(--display);font-weight:600;font-size:1.75rem;line-height:1.12;margin:0 0 .5rem;color:var(--fg);text-wrap:balance;}
+  header p{color:var(--muted);font-size:.9rem;margin:0;}
+
+  section{border-bottom:1px solid var(--line);}
+  section .wrap{padding-block:1.7rem;}
+  h2{
+    font-family:var(--body);font-weight:700;font-size:.7rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent);margin:0 0 1rem;
+    display:flex;align-items:center;gap:.55rem;
+  }
+  h2::before{content:"";width:8px;height:8px;background:var(--accent);flex:none;}
+  h3{font-family:var(--body);font-weight:700;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:1.5rem 0 .6rem;}
+
+  .objetivo{
+    font-family:var(--display);font-size:1.1rem;line-height:1.4;font-weight:600;
+    background:var(--surface);border-left:3px solid var(--accent);
+    padding:.95rem 1.1rem;margin:0 0 1.1rem;
+  }
+
+  ul{list-style:none;margin:0;padding:0;}
+  li{padding-block:.62rem;border-top:1px solid var(--line);}
+  li:first-child{border-top:none;}
+  .lead{font-weight:700;color:var(--fg);}
+  .sub{color:var(--muted);font-size:.88rem;display:block;margin-top:.18rem;}
+  q{font-style:italic;color:var(--accent);quotes:"“" "”";}
+  p.sub{display:block;}
+
+  ol.moves{list-style:none;margin:0;padding:0;counter-reset:m;}
+  ol.moves li{
+    display:grid;grid-template-columns:1.9rem minmax(0,1fr);gap:.2rem .75rem;
+    padding-block:.9rem;border-top:1px solid var(--line);
+  }
+  ol.moves li:first-child{border-top:none;}
+  ol.moves li::before{
+    counter-increment:m;content:counter(m,decimal-leading-zero);
+    font-family:var(--display);font-size:1.05rem;color:var(--accent);line-height:1.35;
+  }
+
+  .qa li{padding-block:.75rem;}
+  .qa .q{font-weight:700;color:var(--fg);}
+  .qa .a{color:var(--muted);font-size:.88rem;display:block;margin-top:.25rem;}
+
+  .words{display:flex;flex-wrap:wrap;gap:.45rem;margin:0;padding:0;}
+  .words li{
+    border:none;padding:.32rem .6rem;background:var(--surface);
+    font-size:.86rem;color:var(--accent);font-style:italic;
+  }
+
+  .no li{color:var(--alert);}
+  .check li{display:grid;grid-template-columns:1.5rem minmax(0,1fr);gap:.65rem;align-items:start;}
+  .check .n{font-family:var(--display);color:var(--muted);font-size:.9rem;}
+
+  .equipo li{display:grid;grid-template-columns:6.5rem minmax(0,1fr);gap:.7rem;align-items:baseline;}
+  .equipo .n{font-weight:700;color:var(--fg);}
+  @media (max-width:520px){ .equipo li{grid-template-columns:1fr;gap:.15rem;} }
+
+  footer{background:var(--surface);}
+  footer .wrap{padding-block:1.6rem 2.2rem;}
+  footer p{color:var(--muted);font-size:.85rem;margin:.4rem 0 0;}
+  footer strong{color:var(--fg);font-weight:700;}
+</style>
+
+<header>
+  <div class="wrap">
+    <span class="interno">Interno · no compartir pantalla</span>
+    <h1>Guion de junta Almik</h1>
+    <p>Sesión 1 · conocer a Julia y al equipo de compras · documento en la sala: VF5</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>Objetivo de hoy</h2>
+    <p class="objetivo">Salir sabiendo cómo corre compras hoy y quién hace qué, con Julia sintiendo que el proyecto es suyo.</p>
+    <p class="sub">Hoy no se cierra alcance ni se negocia nada. Es el levantamiento que se acordó el 2 de septiembre y nunca pasó.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Lo que ya sabemos del equipo</h2>
+    <p class="sub" style="margin:0 0 .9rem">Para que no gastes la sesión preguntando lo que ya está.</p>
+    <ul class="equipo">
+      <li><span class="n">Julia</span><span>Jefa de abastos desde el 1 de septiembre. Contadora de formación, sabe programar, buena analista. Eugenio la describe como ordenada y directa.</span></li>
+      <li><span class="n">Ileana</span><span>Segunda persona de compras. En la propuesta entra como respaldo del proceso, sin horas comprometidas.</span></li>
+      <li><span class="n">Compradoras</span><span>La propuesta habla de tres. Eugenio habló de <q>Julia y la chamanga</q> como dos de compras. El número real no está confirmado.</span></li>
+      <li><span class="n">Almik</span><span>Trece personas en total. Dos gerentes de operaciones, dos de compras.</span></li>
+      <li><span class="n">Arriba</span><span>Eugenio, su papá y Poncho, con autoridad simultánea. Él mismo lo llama un tema de gobernanza sin resolver.</span></li>
+      <li><span class="n">Sistemas</span><span>Odoo como ERP. SharePoint como nube. El proceso de compras corre en un Excel de cuatro columnas que viene de 2010.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Cómo abres</h2>
+    <p class="objetivo">Julia ya construyó por su cuenta unos checks para cachar errores en las órdenes de compra. Antes de este proyecto y sin que nadie se lo pidiera.</p>
+    <p class="sub">Eugenio lo mencionó de pasada. Ábrele con eso. Le dice dos cosas de golpe: que hicimos la tarea, y que la vemos como alguien que construye, no como alguien a quien hay que capacitar. Pregúntale qué más se ha armado sola.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Lo que preguntas</h2>
+    <h3>El equipo</h3>
+    <ul>
+      <li>¿Quiénes son en compras y qué hace cada quien?</li>
+      <li>¿Qué haces tú que no hace nadie más?</li>
+      <li>¿Qué te pasaron cuando entraste y qué armaste tú?</li>
+      <li>¿Con quién te toca pelearte más seguido? Producción, ventas, almacén.</li>
+    </ul>
+    <h3>El proceso</h3>
+    <ul>
+      <li>Llévame un pedido completo, desde que alguien dice que falta material hasta que llega.</li>
+      <li>¿Cómo decides hoy cuánto pedir?</li>
+      <li>¿Qué es lo que más se cae? ¿Dónde se han ido los errores que cuestan?</li>
+      <li>¿A partir de qué monto vuelves a cotizar, y quién firma una orden?</li>
+      <li>¿Hay algo que hoy no puedes decidir tú y que crees que deberías?</li>
+    </ul>
+    <h3>Los datos</h3>
+    <ul>
+      <li>El Excel de compras, ¿es uno solo o hay copias por persona?</li>
+      <li>¿Qué reportes saca Odoo, quién los saca, cada cuándo, y las columnas son siempre las mismas?</li>
+      <li>¿Cuántos proveedores hay en el catálogo y cuántos usas de verdad?</li>
+      <li>El precio vigente de un material, ¿dónde vive?</li>
+      <li>La información de los embarques de China, ¿dónde vive? ¿Correos, WhatsApp, Excel?</li>
+    </ul>
+    <h3>El punto de partida</h3>
+    <ul>
+      <li>¿Cuánto tardas hoy en armar un reporte de compras?</li>
+      <li>¿Y una cotización, desde que la pides hasta que decides?</li>
+      <li>De los pedidos a China del último trimestre, ¿cuántos llegaron en el embarque que planeaste?<span class="sub">Sin estos números, en enero no hay con qué comparar. Si no salen hoy, agenda la sesión para tomarlos.</span></li>
+    </ul>
+    <h3>Ella</h3>
+    <ul>
+      <li>¿Esto te lo explicaron completo, o te enteras hoy?<span class="sub">En privado si se puede. Nunca ha estado en una junta con nosotros. Lo único que le dijeron fue que va a implementar IA en compras.</span></li>
+      <li>¿Qué te quitaría más trabajo mañana?</li>
+      <li>¿Qué días te funcionan de verdad para trabajar en esto?<span class="sub">Pregunta, no impongas. El número se cierra con Eugenio después.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Cómo leerlo a Eugenio</h2>
+    <ul>
+      <li><span class="lead">Se apaga con lo técnico.</span><span class="sub">Nueve minutos seguidos sin hablar cuando Tino explicó arquitectura y modelos. Otros seis después. Traduce todo a un ejemplo de su planta.</span></li>
+      <li><span class="lead">Se prende cuando pone su ejemplo.</span><span class="sub">Solito se metió con la alta de códigos. Déjale el silencio, él lo llena.</span></li>
+      <li><span class="lead">No tiene el nombre de la herramienta.</span><span class="sub">Le dice <q>chattip</q> y <q>Charlie Pity</q>. Háblale de lo que hace, no de qué es.</span></li>
+      <li><span class="lead">Te dice Alejandro.</span></li>
+      <li><span class="lead">Si suelta que Julia le mete 50% de su tiempo, aterrízalo.</span><span class="sub">Ese número es suyo, no de la propuesta. La propuesta dice cuatro horas a la semana, protegidas.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Lo que no haces hoy</h2>
+    <ul class="no">
+      <li>Cerrar alcance o defender la propuesta. Hoy escuchas.</li>
+      <li>Abrir el precio. Eso lo abre Tino. La VF5 no trae esa sección.</li>
+      <li>Exigirle las cuatro horas a Julia enfrente de su jefe el día diez de su trabajo.</li>
+      <li>Mencionar el faltante de ciento cincuenta mil pesos en inventario.</li>
+      <li>Soltar una cifra de días de inventario que salga de ti.</li>
+      <li>Arquitectura, modelos, tokens, ni qué herramienta es.</li>
+      <li><q>Traje de Ironman</q>, <q>sistema operativo tipo iPhone</q>, <q>poner la casa en orden</q>. Son frases de Tino. Eugenio nunca las usó.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Si sale esto, contestas esto</h2>
+    <ul class="qa">
+      <li><span class="q">¿Y el consejo de agentes?</span><span class="a">Él lo propuso y ya hizo clones de director por su cuenta: <q>yo hice director general, director comercial, director de compras</q>. No entra en este piloto, entra después. Dáselo en la versión simple que le gustó, unos expertos con quien rebotar. Cuando Tino la elaboró con secretario y minutas, se le bajó la energía en seco.</span></li>
+      <li><span class="q">¿El gemelo digital cubre toda la empresa?</span><span class="a">Alto nivel todas las áreas. A fondo, solo compras. El mapa de alto nivel es la primera versión de ese gemelo, y cada área que entre después lo completa.</span></li>
+      <li><span class="q">¿Y Fleja, el negociador?</span><span class="a">Se cambió por Matou a petición de ustedes. Entra cuando compras lo pida y se cotiza aparte.</span></li>
+      <li><span class="q">¿Cuántos días de inventario traemos?</span><span class="a">Él mismo dijo <q>siete días de stock</q>. Es su número, no lo corrijas en la sala. La otra grabación apunta a cuarenta y cinco; eso se valida con Julia después.</span></li>
+      <li><span class="q">¿Cuándo empezamos de verdad?</span><span class="a">El lunes. La semana que entra es de accesos y archivos, no de construir.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>La semana que entra</h2>
+    <p class="sub" style="margin:0 0 .9rem">La VF5 ya no trae el anexo. Estos nueve puntos son lo que evita que la semana 1 se atore. Están en el tablero de Tino; si no lo abre, los llevas tú.</p>
+    <ul class="check">
+      <li><span class="n">1</span><span>Confirmar a Julia como champion y a Ileana como respaldo. Bloquear sus cuatro horas.</span></li>
+      <li><span class="n">2</span><span>Contratar dos o tres licencias. Administrador: sistemas.</span></li>
+      <li><span class="n">3</span><span>Crear la carpeta compartida en SharePoint. Cuatro subcarpetas: contexto, exports, agentes, reportes.</span></li>
+      <li><span class="n">4</span><span>Una exportación manual de Odoo primero, para validar columnas. Después la programan.</span></li>
+      <li><span class="n">5</span><span>Subir el archivo de compras y el histórico, tal cual, sin limpiar.</span></li>
+      <li><span class="n">6</span><span>Subir las órdenes a China vigentes y el registro de embarques.</span></li>
+      <li><span class="n">7</span><span>Nombrar al de sistemas: nombre, correo, teléfono.</span></li>
+      <li><span class="n">8</span><span>Agendar los cuarenta minutos con Eugenio.</span></li>
+      <li><span class="n">9</span><span>Definir el umbral de re-cotización y quién aprueba qué.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Sus palabras, para devolvérselas</h2>
+    <ul class="words">
+      <li>bronca</li>
+      <li>relajo</li>
+      <li>un Excellito de cuatro columnas</li>
+      <li>no tengo nada nada estructurado</li>
+      <li>21 años y nunca hemos manejado presupuestos</li>
+      <li>no te limites en preguntar cosas básicas</li>
+    </ul>
+    <p class="sub" style="margin-top:.9rem">La última es su propia consigna para la junta de octubre. Devuélvesela como el lema de esa sesión.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Con qué sales o no sales:</strong></p>
+    <p>El mapa del equipo: quién hace qué en compras. Cómo corre un pedido de punta a punta. Dónde viven los datos. El nombre del de sistemas. Y la sesión agendada para tomar el punto de partida.</p>
+  </div>
+</footer>
