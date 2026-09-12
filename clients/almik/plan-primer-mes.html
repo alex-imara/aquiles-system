@@ -1,0 +1,332 @@
+<title>Primer mes del piloto Almik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap">
+<style>
+  :root{
+    --paper:#FFFFFF; --paper-raised:#FAF8F5; --ink:#0A1524; --muted:#3E4754;
+    --line:#E4E3DF; --accent:#FFB24A; --accent-ink:#8A5300; --accent-wash:#FFF3E0;
+    --status-done:#2F6B4F; --status-pending:#A23B2E;
+    --font-display:'Fraunces', Cambria, Georgia, 'Times New Roman', serif;
+    --font-body: Arial, Helvetica, 'Segoe UI', sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0A1524;--paper-raised:#101E30;--ink:#ECEEF1;--muted:#A9B2BF;--line:#26364A;
+      --accent:#FFB24A;--accent-ink:#FFC876;--accent-wash:#2A2113;
+      --status-done:#57B98A;--status-pending:#E2725A;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0A1524;--paper-raised:#101E30;--ink:#ECEEF1;--muted:#A9B2BF;--line:#26364A;
+    --accent:#FFB24A;--accent-ink:#FFC876;--accent-wash:#2A2113;
+    --status-done:#57B98A;--status-pending:#E2725A;
+  }
+
+  *{box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--font-body);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:56rem;margin:0 auto;padding:0 1.5rem;}
+  h1,h2,h3{font-family:var(--font-display);font-weight:600;text-wrap:balance;color:var(--ink);}
+  h2{font-size:1.45rem;margin:0 0 1.1rem;}
+  h3{font-size:.95rem;margin:1.8rem 0 .6rem;text-transform:uppercase;letter-spacing:.06em;font-family:var(--font-body);font-weight:700;color:var(--muted);}
+  .kicker{text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;color:var(--accent-ink);font-weight:700;}
+  section.bookend .kicker{color:var(--accent);}
+
+  section.bookend{background:var(--ink);color:var(--paper);}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) section.bookend{background:#04070C;}}
+  :root[data-theme="dark"] section.bookend{background:#04070C;}
+  section.bookend .wrap{padding-top:4.5rem;padding-bottom:4.5rem;}
+  section.bookend h1{color:var(--paper);font-size:2.3rem;line-height:1.08;margin:.6rem 0 1rem;}
+  section.bookend p{color:#C9CCD3;max-width:38rem;margin:0 0 .8rem;}
+  section.bookend .meta{margin-top:2.2rem;font-size:.85rem;color:#8B909B;border-top:1px solid #2A2F3A;padding-top:1.2rem;}
+
+  nav.index{padding:2.4rem 0 1.2rem;border-bottom:1px solid var(--line);}
+  nav.index ol{list-style:none;margin:0;padding:0;columns:2;column-gap:2rem;}
+  nav.index li{margin-bottom:.5rem;break-inside:avoid;font-size:.9rem;}
+  nav.index a{color:var(--muted);text-decoration-color:var(--line);text-underline-offset:3px;}
+  nav.index .n{font-family:var(--font-display);color:var(--accent-ink);font-weight:600;margin-right:.4rem;}
+
+  section.s{padding:2.8rem 0;border-bottom:1px solid var(--line);}
+  section.s .num{font-family:var(--font-display);color:var(--accent-ink);font-size:1rem;font-weight:600;}
+
+  .points{list-style:none;margin:0 0 1.2rem;padding:0;max-width:46rem;}
+  .points li{
+    display:grid;grid-template-columns:auto minmax(0,1fr);gap:.9rem;align-items:baseline;
+    padding:.62rem 0;border-top:1px solid var(--line);font-size:.95rem;
+  }
+  .points li:last-child{border-bottom:1px solid var(--line);}
+  .points .k{font-weight:700;white-space:nowrap;}
+  .points .v{color:var(--muted);}
+  .points li.solo{grid-template-columns:1fr;}
+
+  .headline{
+    font-family:var(--font-display);font-size:1.15rem;font-weight:600;line-height:1.4;
+    margin:0 0 1.2rem;padding:1rem 1.2rem;background:var(--paper-raised);
+    border-left:3px solid var(--accent);max-width:46rem;
+  }
+
+  .tblwrap{overflow-x:auto;margin:1rem 0 1.4rem;border:1px solid var(--line);}
+  table{border-collapse:collapse;width:100%;font-size:.87rem;}
+  th,td{text-align:left;padding:.5rem .7rem;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{background:var(--paper-raised);font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
+  tr:last-child td{border-bottom:none;}
+  td.wk{font-family:var(--font-display);font-variant-numeric:tabular-nums;white-space:nowrap;}
+
+  figure{margin:1.4rem 0 2rem;}
+  figure svg{max-width:100%;height:auto;display:block;}
+  figcaption{font-size:.8rem;color:var(--muted);margin-top:.6rem;max-width:44rem;}
+  .figscroll{overflow-x:auto;}
+
+  .note{font-size:.82rem;color:var(--muted);margin:.6rem 0 1.2rem;max-width:44rem;}
+  .pend{color:var(--status-pending);font-weight:700;font-size:.72rem;letter-spacing:.06em;}
+
+  @media (max-width:600px){
+    nav.index ol{columns:1;}
+    section.bookend h1{font-size:1.8rem;}
+    .points li{grid-template-columns:1fr;gap:.15rem;}
+  }
+  .logos{display:flex;align-items:center;gap:1.6rem;flex-wrap:wrap;margin-bottom:1.6rem;}
+  .logos img{display:block;height:30px;width:auto;}
+  .logos img.almik{height:38px;}
+  .logos .sep{width:1px;height:28px;background:#2A2F3A;flex:none;}
+  @media (max-width:600px){ .logos img{height:24px;} .logos img.almik{height:30px;} .logos .sep{display:none;} }
+</style>
+
+<section class="bookend">
+  <div class="wrap">
+    <div class="logos">
+      <img src="imara-logo.png" alt="Imara" width="900" height="249">
+      <span class="sep"></span>
+      <img class="almik" src="almik-logo.png" alt="Almik · Tu Solución de Empaque" width="900" height="275">
+    </div>
+    <p class="kicker">Piloto de IA en compras</p>
+    <h1>El primer mes</h1>
+    <p>Lo que Julia pidió el viernes: descargar el inventario y que le regrese el resultado del MRP, sin tener que rearmarlo a mano.</p>
+    <p>Este mes no construye ese resultado todavía. Construye la base que lo hace posible: los archivos ordenados, las reglas escritas, y el primer flujo corriendo.</p>
+    <p class="meta">
+      Semanas 1 a 4 &middot; 14 de septiembre al 9 de octubre<br>
+      Champion: Julia &middot; respaldo: Ileana &middot; patrocinador: Eugenio Aldape<br>
+      Imara: Constantino Madero, Alex Ruiz, Mike Verduzco
+    </p>
+  </div>
+</section>
+
+<nav class="index">
+  <div class="wrap">
+    <ol>
+      <li><span class="n">01</span><a href="#flujo">Cómo va a fluir tu información</a></li>
+      <li><span class="n">02</span><a href="#mrp">Los cuatro MRP</a></li>
+      <li><span class="n">03</span><a href="#semanas">Las cuatro semanas</a></li>
+      <li><span class="n">04</span><a href="#ven">Qué van a ver funcionando</a></li>
+      <li><span class="n">05</span><a href="#semana1">Lo que necesitamos esta semana</a></li>
+    </ol>
+  </div>
+</nav>
+
+<section class="s" id="flujo">
+  <div class="wrap">
+    <span class="num">01</span>
+    <h2>Cómo va a fluir tu información</h2>
+    <p class="headline">Tú descargas el archivo a una carpeta. El agente lo lee de ahí y te regresa el resultado. Tu archivo se queda igual.</p>
+    <figure>
+      <div class="figscroll">
+        <svg viewBox="0 0 880 250" role="img" aria-label="Flujo de la información: los archivos de Julia, que son los cuatro MRP, el archivo de compras y las órdenes a China, se descargan a una carpeta compartida. El agente lee de esa carpeta, regresa el resultado en una tabla, y Julia decide. El agente solo lee: no escribe en los archivos ni en Odoo." style="font-family:Arial,Helvetica,sans-serif">
+          <defs>
+            <marker id="f1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+            </marker>
+          </defs>
+          <g fill="currentColor" font-size="11">
+            <text x="0" y="12" font-size="10" opacity=".65">DE TU COMPUTADORA AL RESULTADO</text>
+
+            <rect x="0" y="34" width="152" height="110" fill="currentColor" opacity=".16" stroke="currentColor" stroke-width="1.2"/>
+            <text x="12" y="55" font-size="11" font-weight="bold">Tus archivos</text>
+            <text x="12" y="76" font-size="10">Los cuatro MRP</text>
+            <text x="12" y="94" font-size="10">El archivo de compras</text>
+            <text x="12" y="112" font-size="10">Órdenes a China</text>
+            <text x="12" y="132" font-size="9" opacity=".6">como están hoy</text>
+
+            <text x="166" y="82" font-size="9">descargas</text>
+            <line x1="152" y1="92" x2="212" y2="92" stroke="currentColor" stroke-width="1.2" marker-end="url(#f1)"/>
+
+            <rect x="220" y="34" width="140" height="110" fill="none" stroke="currentColor" stroke-width="1.2"/>
+            <text x="232" y="55" font-size="11" font-weight="bold">Carpeta</text>
+            <text x="232" y="70" font-size="11" font-weight="bold">compartida</text>
+            <text x="232" y="92" font-size="10">En la nube de Almik</text>
+            <text x="232" y="112" font-size="9" opacity=".6">tú y nosotros la vemos</text>
+
+            <text x="374" y="82" font-size="9">lee</text>
+            <line x1="360" y1="92" x2="420" y2="92" stroke="currentColor" stroke-width="1.2" marker-end="url(#f1)"/>
+
+            <rect x="428" y="34" width="126" height="110" fill="none" stroke="currentColor" stroke-width="1.2"/>
+            <text x="440" y="55" font-size="11" font-weight="bold">El agente</text>
+            <text x="440" y="76" font-size="10">Cruza los datos</text>
+            <text x="440" y="94" font-size="10">Arma el resultado</text>
+            <text x="440" y="112" font-size="10">Dice de dónde salió</text>
+
+            <text x="568" y="82" font-size="9">regresa</text>
+            <line x1="554" y1="92" x2="614" y2="92" stroke="currentColor" stroke-width="1.2" marker-end="url(#f1)"/>
+
+            <rect x="622" y="34" width="122" height="110" fill="none" stroke="currentColor" stroke-width="1.2"/>
+            <text x="634" y="55" font-size="11" font-weight="bold">El resultado</text>
+            <text x="634" y="76" font-size="10">Qué falta</text>
+            <text x="634" y="94" font-size="10">Qué revisar</text>
+            <text x="634" y="112" font-size="10">Con su fuente</text>
+
+            <text x="758" y="82" font-size="9">decides</text>
+            <line x1="744" y1="92" x2="796" y2="92" stroke="currentColor" stroke-width="1.2" marker-end="url(#f1)"/>
+
+            <rect x="804" y="34" width="74" height="110" fill="var(--accent-wash)" stroke="var(--accent-ink)" stroke-width="2.2"/>
+            <text x="814" y="62" font-size="12" font-weight="bold" fill="var(--accent-ink)">Julia</text>
+            <text x="814" y="84" font-size="10" fill="var(--accent-ink)">decide</text>
+            <text x="814" y="102" font-size="10" fill="var(--accent-ink)">siempre</text>
+            <text x="814" y="120" font-size="10" fill="var(--accent-ink)">ella</text>
+
+            <line x1="0" y1="176" x2="878" y2="176" stroke="currentColor" stroke-width="1" opacity=".35"/>
+            <text x="0" y="198" font-size="10" font-weight="bold">El agente solo lee.</text>
+            <text x="118" y="198" font-size="10">No escribe en tus archivos, no escribe en Odoo, y no manda nada a un proveedor.</text>
+            <text x="0" y="218" font-size="10" opacity=".65">Si el archivo cambia de estructura, nos avisas y lo ajustamos. No hay que rehacer el archivo para que esto funcione.</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption><strong>Figura 1.</strong> El punto es que no cambias tu forma de trabajar para que esto sirva. Descargas como ya descargas, y el resultado llega a la carpeta.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="s" id="mrp">
+  <div class="wrap">
+    <span class="num">02</span>
+    <h2>Los cuatro MRP</h2>
+    <p class="headline">Cómo se juntan los cuatro en un solo lugar es la primera cosa que hay que resolver. Se decide antes de programar nada.</p>
+    <figure>
+      <div class="figscroll">
+        <svg viewBox="0 0 820 300" role="img" aria-label="Los cuatro MRP actuales, de productos comercializados, materia prima, reacciones y series por sucursal, apuntan con línea punteada a un bloque marcado como pendiente de definir: cómo se juntan. De ahí sale una línea sólida a Bobina, el agente de reposición. La reconciliación es lo único sin resolver." style="font-family:Arial,Helvetica,sans-serif">
+          <defs>
+            <marker id="f2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+            </marker>
+            <marker id="f2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--accent-ink)"/>
+            </marker>
+          </defs>
+          <g fill="currentColor" font-size="11">
+            <text x="0" y="12" font-size="10" opacity=".65">HOY SON CUATRO ARCHIVOS</text>
+
+            <rect x="0" y="30" width="188" height="40" fill="currentColor" opacity=".16" stroke="currentColor" stroke-width="1.2"/>
+            <text x="12" y="55" font-size="11">Productos comercializados</text>
+            <rect x="0" y="82" width="188" height="40" fill="currentColor" opacity=".16" stroke="currentColor" stroke-width="1.2"/>
+            <text x="12" y="107" font-size="11">Materia prima</text>
+            <rect x="0" y="134" width="188" height="40" fill="currentColor" opacity=".16" stroke="currentColor" stroke-width="1.2"/>
+            <text x="12" y="159" font-size="11">Reacciones</text>
+            <rect x="0" y="186" width="188" height="40" fill="currentColor" opacity=".16" stroke="currentColor" stroke-width="1.2"/>
+            <text x="12" y="211" font-size="11">Series por sucursal</text>
+            <text x="0" y="248" font-size="9" opacity=".6">Mismo patrón, particularidades distintas en cada uno.</text>
+
+            <path d="M188 50 L250 50 L250 118" fill="none" stroke="var(--accent-ink)" stroke-width="1.3" stroke-dasharray="5 3"/>
+            <path d="M188 102 L250 102" fill="none" stroke="var(--accent-ink)" stroke-width="1.3" stroke-dasharray="5 3"/>
+            <path d="M188 154 L250 154 L250 136" fill="none" stroke="var(--accent-ink)" stroke-width="1.3" stroke-dasharray="5 3"/>
+            <path d="M188 206 L250 206 L250 140" fill="none" stroke="var(--accent-ink)" stroke-width="1.3" stroke-dasharray="5 3"/>
+            <line x1="250" y1="128" x2="308" y2="128" stroke="var(--accent-ink)" stroke-width="1.5" marker-end="url(#f2a)"/>
+
+            <rect x="316" y="76" width="210" height="104" fill="var(--accent-wash)" stroke="var(--accent-ink)" stroke-width="2.2" stroke-dasharray="6 4"/>
+            <text x="330" y="100" font-size="10" font-weight="bold" fill="var(--accent-ink)">POR DEFINIR</text>
+            <text x="330" y="122" font-size="11" fill="var(--accent-ink)">Cómo se juntan los cuatro</text>
+            <text x="330" y="140" font-size="11" fill="var(--accent-ink)">en un solo lugar</text>
+            <text x="330" y="164" font-size="9" fill="var(--accent-ink)">Semanas 1 y 2, con Julia</text>
+
+            <line x1="526" y1="128" x2="584" y2="128" stroke="currentColor" stroke-width="1.2" marker-end="url(#f2)"/>
+            <text x="536" y="118" font-size="9">alimenta</text>
+
+            <rect x="592" y="86" width="150" height="84" fill="none" stroke="currentColor" stroke-width="1.2"/>
+            <text x="606" y="112" font-size="12" font-weight="bold">Bobina</text>
+            <text x="606" y="132" font-size="10">Qué reponer</text>
+            <text x="606" y="150" font-size="10">y cuánto pedir</text>
+
+            <line x1="0" y1="268" x2="818" y2="268" stroke="currentColor" stroke-width="1" opacity=".35"/>
+            <text x="0" y="290" font-size="10">Punteado quiere decir que todavía no está definido. Nada se programa hasta que esta decisión esté por escrito.</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption><strong>Figura 2.</strong> Los cuatro archivos se quedan donde están. Lo que hay que acordar es la regla que los lee juntos.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="s" id="semanas">
+  <div class="wrap">
+    <span class="num">03</span>
+    <h2>Las cuatro semanas</h2>
+    <div class="tblwrap">
+      <table>
+        <thead>
+          <tr><th>Semana</th><th>Almik</th><th>Imara</th><th>Qué queda</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="wk"><strong>1</strong><br>14–18 sep</td>
+            <td>Licencias y quién las administra. Carpeta compartida con acceso. Julia sube los cuatro MRP y el archivo de compras. Exportación manual de Odoo. Nombrar al de sistemas.</td>
+            <td>Checklist de accesos. Entrevista de mapeo con Julia. Sesión de cuarenta minutos con Eugenio.</td>
+            <td>Los archivos en la carpeta y el proceso de compras dibujado como opera hoy.</td>
+          </tr>
+          <tr>
+            <td class="wk"><strong>2</strong><br>21–25 sep</td>
+            <td>Programar los exports de Odoo. Julia revisa el borrador de reglas del área.</td>
+            <td>Definir cómo se juntan los cuatro MRP. Escribir las reglas: umbral de re-cotización, quién aprueba qué, baja de proveedor. Medir el punto de partida.</td>
+            <td>La decisión del MRP por escrito y las reglas del área acordadas.</td>
+          </tr>
+          <tr>
+            <td class="wk"><strong>3</strong><br>28 sep–2 oct</td>
+            <td>Julia revisa el catálogo de proveedores.</td>
+            <td>Limpieza del catálogo de proveedores y del maestro de materia prima. Primera prueba del flujo completo con un archivo real.</td>
+            <td>Una prueba que Julia puede correr sola.</td>
+          </tr>
+          <tr>
+            <td class="wk"><strong>4</strong><br>5–9 oct</td>
+            <td>Julia valida qué proveedores siguen vivos y qué códigos ya no se usan.</td>
+            <td>Histórico de compras ordenado por proveedor y por código. Base de las órdenes a China.</td>
+            <td>La capa de contexto armada y validada.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Sesión semanal de dos horas. Propusimos jueves. <span class="pend">[POR CONFIRMAR]</span> Reporte a dirección cada quince días.</p>
+  </div>
+</section>
+
+<section class="s" id="ven">
+  <div class="wrap">
+    <span class="num">04</span>
+    <h2>Qué van a ver funcionando</h2>
+    <p class="headline">En este primer mes no queda un agente terminado. Queda el flujo corriendo con un archivo real, y los datos en orden para que los agentes sirvan.</p>
+    <ul class="points">
+      <li><span class="k">Semana 1</span><span class="v">La carpeta armada, con sus archivos dentro y visible para los dos lados.</span></li>
+      <li><span class="k">Semana 2</span><span class="v">El proceso de compras dibujado y las reglas del área por escrito. Es la primera vez que existen en papel.</span></li>
+      <li><span class="k">Semana 3</span><span class="v">La primera prueba: Julia deja un archivo en la carpeta, el agente lo lee y regresa un resultado que ella puede revisar.</span></li>
+      <li><span class="k">Semana 4</span><span class="v">El catálogo de proveedores y el maestro de materia prima limpios y validados por Julia.</span></li>
+    </ul>
+    <p class="note">Los cuatro agentes se liberan uno por uno a partir de finales de octubre, cada uno con su ficha de uso. Lo de este mes es lo que hace que contesten con datos de Almik y no con generalidades.</p>
+  </div>
+</section>
+
+<section class="s" id="semana1">
+  <div class="wrap">
+    <span class="num">05</span>
+    <h2>Lo que necesitamos esta semana</h2>
+    <ul class="points">
+      <li><span class="k">Eugenio</span><span class="v">Confirmar las licencias y que las administre sistemas, no compras. Nombrar a la persona de sistemas: nombre, correo y teléfono.</span></li>
+      <li><span class="k">Sistemas</span><span class="v">La carpeta compartida en la nube que ya usan, con acceso para nosotros. Una exportación manual de Odoo de inventario, compras y facturación.</span></li>
+      <li><span class="k">Julia</span><span class="v">Subir los cuatro MRP, el archivo de compras y las órdenes a China vigentes. Tal cual están, sin limpiar ni reacomodar.</span></li>
+      <li><span class="k">Julia</span><span class="v">Dos horas para la entrevista de mapeo. Es la sesión que define todo lo demás.</span></li>
+    </ul>
+    <p class="note">Si algo de esto se atora, se dice en la sesión semanal y lo resolvemos ahí. No detiene el arranque: mientras la carpeta exista, trabajamos con lo que Julia mande por correo.</p>
+  </div>
+</section>
+
+<section class="bookend">
+  <div class="wrap">
+    <p class="kicker">Al cierre del mes</p>
+    <h1>Los datos de compras en orden y las reglas escritas.</h1>
+    <p>Con eso los agentes empiezan a construirse sobre algo firme, y el resultado del MRP deja de depender de que alguien lo rearme a mano.</p>
+  </div>
+</section>
