@@ -39,7 +39,7 @@ figuras del mismo documento.
 
 | Estado | Cómo se dibuja |
 |---|---|
-| Cumplido | `fill="currentColor" opacity=".16"` + borde `stroke-width="1.2"` |
+| Cumplido | `fill="currentColor" fill-opacity=".16"` + borde `stroke-width="1.2"`. Usa `fill-opacity`, no `opacity`: `opacity` aplica al elemento completo y apaga también el borde. |
 | A medias | `fill="url(#hatch)"` + borde `stroke-width="1.2"` |
 | Sin empezar | `fill="none"` + borde `opacity=".45"`, y el texto también a `.55` |
 | Lo que importa | `stroke="var(--accent-ink)" stroke-width="2.2"`, texto en `var(--accent-ink)` |

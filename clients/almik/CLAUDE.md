@@ -50,7 +50,7 @@ solo funciona en fondo oscuro. Se bajaron de los sitios de cada empresa.
 
 ## Lo que salió de la sesión del 11 de septiembre y no está en el contrato
 
-- **Guia** además valida cada orden de compra antes de que salga. Lo pidió Julia
+- **Guía** además valida cada orden de compra antes de que salga. Lo pidió Julia
   porque un error en la orden pega en el sistema de costos y detiene el almacén.
 - **El MRP** entra al trabajo. Son cuatro archivos: comercializados, materia
   prima, reacciones y series por sucursal. Cómo se juntan sigue sin definirse.

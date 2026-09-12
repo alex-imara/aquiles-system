@@ -16,7 +16,7 @@
     --status-pending:#A23B2E;
     --font-display:'Fraunces', Cambria, Georgia, 'Times New Roman', serif;
     --font-body: Arial, Helvetica, 'Segoe UI', sans-serif;
-    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --bookend-fg:#FFFFFF;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
@@ -41,11 +41,11 @@
   .kicker{text-transform:uppercase;letter-spacing:.12em;font-size:.72rem;color:var(--accent-ink);font-weight:700;}
   section.bookend .kicker{color:var(--accent);}
 
-  section.bookend{background:var(--ink);color:var(--paper);}
+  section.bookend{background:var(--ink);color:var(--bookend-fg);}
   @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) section.bookend{background:#04070C;}}
   :root[data-theme="dark"] section.bookend{background:#04070C;}
   section.bookend .wrap{padding-top:4.5rem;padding-bottom:4.5rem;}
-  section.bookend h1{color:var(--paper);font-size:2.4rem;line-height:1.08;margin:.6rem 0 1rem;}
+  section.bookend h1{color:var(--bookend-fg);font-size:2.4rem;line-height:1.08;margin:.6rem 0 1rem;}
   section.bookend p{color:#C9CCD3;max-width:38rem;margin:0 0 .8rem;}
   section.bookend .meta{margin-top:2.2rem;font-size:.85rem;color:#8B909B;border-top:1px solid #2A2F3A;padding-top:1.2rem;}
 
@@ -88,7 +88,7 @@
   .stat .l{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:.35rem;}
 
   figure{margin:1.4rem 0 2rem;}
-  figure svg{max-width:100%;height:auto;display:block;}
+  figure svg{width:100%;min-width:640px;max-width:none;height:auto;display:block;}
   figcaption{font-size:.8rem;color:var(--muted);margin-top:.6rem;max-width:44rem;}
   .figscroll{overflow-x:auto;}
 
@@ -109,8 +109,8 @@
     <p>Compras opera con su contexto ordenado y con cuatro agentes que Julia dirige.</p>
     <p class="meta">
       120 días &middot; una sola área &middot; alcance cerrado<br>
-      Champion: Julia &middot; respaldo: Ileana &middot; patrocinador: Eugenio Aldape<br>
-      Imara: Constantino Madero, Alex Ruiz
+      Responsable en Almik: Julia &middot; respaldo: Ileana &middot; patrocinador: Eugenio Aldape<br>
+      Imara: Constantino Madero, Alex Ruiz, Mike Verduzco
     </p>
   </div>
 </section>
@@ -134,11 +134,11 @@
   <div class="wrap">
     <span class="num">01</span>
     <h2>Por qué compras</h2>
-    <p class="headline">Producción, ventas e inventario dependen de lo que compras decida. Es donde una mejora se siente en toda la planta.</p>
+    <p class="headline">Producción, ventas e inventario dependen de lo que compras decida.</p>
     <ul class="points">
-      <li><span class="k">Inventario</span><span class="v">Ya bajaron los días de materia prima. Falta que la decisión de qué pedir se sostenga con método.</span></li>
+      <li><span class="k">Inventario</span><span class="v">La decisión de qué pedir hoy se toma sin un método escrito.</span></li>
       <li><span class="k">China</span><span class="v">Varios proveedores, un contenedor al mes. Qué pedido sube a qué embarque se decide a mano.</span></li>
-      <li><span class="k">El área</span><span class="v">Julia llegó con perfil analítico. Lo que le falta es equipo.</span></li>
+      <li><span class="k">El área</span><span class="v">Julia entró a compras en septiembre.</span></li>
     </ul>
   </div>
 </section>
@@ -161,7 +161,7 @@
   <div class="wrap">
     <span class="num">03</span>
     <h2>Los cuatro agentes</h2>
-    <p class="headline">Ninguno compra solo. Julia decide en los cuatro.</p>
+    <p class="headline">Ninguno compra solo: Julia decide en los cuatro.</p>
     <div class="tblwrap">
       <table>
         <thead>
@@ -196,7 +196,7 @@
       </table>
     </div>
     <p class="note">Los nombres salen de su mundo: la bobina que se repone, la estiba de un contenedor, la guía que acompaña un embarque. <em>Matou</em> es muelle en mandarín.</p>
-    <p class="flag">Bobina depende de que los exports de inventario lleguen limpios. Si en la fase de contexto vemos que no, Matou se adelanta. Preferimos tres agentes que se usan todos los días a cuatro con uno en el que nadie confía.</p>
+    <p class="note">Bobina depende de que los exports de inventario lleguen limpios. Si en la fase de contexto vemos que no, lo decimos a tiempo y Matou se adelanta en el orden.</p>
   </div>
 </section>
 
@@ -206,13 +206,13 @@
     <h2>Cómo funciona</h2>
     <figure>
       <div class="figscroll">
-        <svg viewBox="0 0 760 310" role="img" aria-label="Los datos de Almik se limpian en una capa de contexto, alimentan a los cuatro agentes, y todo lo que los agentes proponen pasa por Julia antes de ejecutarse. Julia también corrige la capa de contexto." style="font-family:Arial,Helvetica,sans-serif;color:currentColor">
+        <svg viewBox="0 0 760 310" role="img" aria-label="Los datos de Almik se limpian en una capa de contexto, alimentan a los cuatro agentes, y todo lo que los agentes proponen pasa por Julia antes de ejecutarse. Julia también corrige la capa de contexto." style="font-family:Arial,Helvetica,sans-serif">
           <defs>
-            <marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
-              <path d="M0,0 L6,3 L0,6 z" fill="currentColor"/>
+            <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
             </marker>
-            <marker id="arA" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto">
-              <path d="M0,0 L6,3 L0,6 z" fill="var(--accent-ink)"/>
+            <marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--accent-ink)"/>
             </marker>
           </defs>
 
@@ -279,7 +279,7 @@
     <span class="num">05</span>
     <h2>El plan</h2>
     <div class="stats">
-      <div class="stat"><div class="v">18</div><div class="l">Semanas</div></div>
+      <div class="stat"><div class="v">120</div><div class="l">Días</div></div>
       <div class="stat"><div class="v">1</div><div class="l">Área</div></div>
       <div class="stat"><div class="v">3</div><div class="l">Entregables</div></div>
       <div class="stat"><div class="v">4</div><div class="l">Agentes</div></div>
@@ -317,7 +317,7 @@
         </tbody>
       </table>
     </div>
-    <p class="note">Las fases se traslapan. Las duraciones son aproximadas: la limpieza de datos manda. La fecha de cierre no se mueve. Diciembre está adentro.</p>
+    <p class="note">Las fases se traslapan y las duraciones son aproximadas: la limpieza de datos manda. Las semanas de diciembre cuentan dentro del plazo.</p>
   </div>
 </section>
 
@@ -361,7 +361,7 @@
         </tbody>
       </table>
     </div>
-    <p class="note">Lo de la derecha se cotiza por separado, cuando compras haya demostrado que mueve algo. Ahí entra también Fleja, el agente negociador, que se cambió por Matou a petición de Almik.</p>
+    <p class="note">Lo de la derecha se cotiza por separado, cuando compras haya demostrado que mueve algo.</p>
   </div>
 </section>
 
@@ -374,13 +374,14 @@
       <li><span class="k">Eugenio</span><span class="v">40 minutos la primera semana y 30 minutos al mes.</span></li>
       <li><span class="k">Carpeta</span><span class="v">Una carpeta compartida en la nube de Almik donde caen los exports de Odoo.</span></li>
       <li><span class="k">Archivos</span><span class="v">El archivo de compras que usan hoy y el histórico, en el formato en que esté.</span></li>
-      <li><span class="k">Licencias</span><span class="v">Dos o tres de la herramienta de IA, por cuenta de Almik. El administrador debe ser sistemas, no compras.</span></li>
+      <li><span class="k">Licencias</span><span class="v">Dos o tres licencias de la herramienta de IA. El administrador debe ser sistemas, no compras.</span></li>
       <li><span class="k">Sistemas</span><span class="v">Una persona que dé accesos.</span></li>
+      <li><span class="k">Por cerrar</span><span class="v">La fecha de la junta de planeación de octubre, y cuántas compradoras entran a la medición del arranque.</span></li>
     </ul>
     <h3>Cómo nos comunicamos</h3>
     <ul class="points">
-      <li><span class="k">Semanal</span><span class="v">Una hora de trabajo con Julia. Presencial cuando toque liberar un agente.</span></li>
-      <li><span class="k">Quincenal</span><span class="v">Reporte corto a Eugenio y a Poncho: qué se construyó, qué usa Julia, qué sigue, qué necesitamos.</span></li>
+      <li><span class="k">Semanal</span><span class="v">Dos horas de trabajo con Julia. Presencial cuando toque liberar un agente.</span></li>
+      <li><span class="k">Quincenal</span><span class="v">Reporte corto a dirección: qué se construyó, qué usa Julia, qué sigue, qué necesitamos.</span></li>
       <li><span class="k">Mensual</span><span class="v">30 minutos con Eugenio.</span></li>
       <li><span class="k">Siempre</span><span class="v">Todo lo que construimos vive en la carpeta de Almik.</span></li>
     </ul>
@@ -395,7 +396,7 @@
     <h3>Lo que registramos las primeras semanas</h3>
     <ul class="points">
       <li><span class="k">Reportes</span><span class="v">Cuánto tiempo se va en armarlos.</span></li>
-      <li><span class="k">Órdenes</span><span class="v">Cuántas salen con oportunidades.</span></li>
+      <li><span class="k">Órdenes</span><span class="v">Cuántas salen con un error que hay que corregir.</span></li>
       <li><span class="k">Cotización</span><span class="v">Cuánto tarda desde que se pide hasta que se decide.</span></li>
       <li><span class="k">China</span><span class="v">Cuántos pedidos llegaron en el embarque que se planeó.</span></li>
     </ul>
@@ -407,7 +408,6 @@
       <li class="solo"><span class="v">¿Qué hace hoy el equipo que antes no podía por falta de tiempo o de datos?</span></li>
     </ul>
     <p class="note">Las metas numéricas se fijan con Julia en el arranque, cuando tengamos el punto de partida medido.</p>
-    <p class="flag">Por confirmar con Almik: la fecha de la junta de planeación de octubre, y cuántas compradoras entran a la medición del arranque. <strong>[A VALIDAR]</strong></p>
   </div>
 </section>
 
